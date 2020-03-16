@@ -18,11 +18,24 @@ func init() {
 func main() {
 	http.Handle("/graphql", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		graphqlHandler := &relay.Handler{Schema: schema}
-		if r.Method == "GET" {
+
+		switch r.Method {
+
+		case "GET":
 			w.Write(page)
-		} else if r.Method == "POST" {
+		case "POST":
 			graphqlHandler.ServeHTTP(w, r)
-		} else{
+		case "OPTIONS":
+			//handle preflight in here
+			w.Header().Set("X-Powered-By", "gopher_tech")
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE")
+			w.Header().Set("Vary", "Access-Control-Request-Headers")
+			w.Header().Set("Access-Control-Allow-Headers", "authorization,client-name,client-version,content-type")
+			w.Header().Set("Connection", "keep-alive")
+			//w.Header().Set("Content-Length", "0")
+			w.WriteHeader(204)
+		default:
 			w.WriteHeader(400)
 			w.Write([]byte("Must send GET/POST request"))
 		}
