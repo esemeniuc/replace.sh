@@ -1,13 +1,16 @@
-#[macro_use]
+#![feature(decl_macro, proc_macro_hygiene)]
 extern crate juniper;
 
 use juniper_from_schema::graphql_schema_from_file;
 use juniper::{FieldResult, Executor};
 
+use rocket::{response::content, State};
+
+
 // This is the important line
 graphql_schema_from_file!("schema.graphql");
 
-pub struct Context;
+pub struct Context(i32);
 
 impl juniper::Context for Context {}
 
@@ -18,6 +21,7 @@ impl QueryFields for Query {
                          _executor: &Executor<'_, Context>,
                          name: String,
     ) -> FieldResult<String> {
+        _executor.context().0;
         Ok(format!("Hello, {}!", name))
     }
 }
@@ -30,29 +34,36 @@ impl MutationFields for Mutation {
     }
 }
 
+#[rocket::get("/")]
+fn graphiql() -> content::Html<String> {
+    juniper_rocket::graphiql_source("/graphql")
+}
+
+#[rocket::get("/graphql?<request>")]
+fn get_graphql_handler(
+    request: juniper_rocket::GraphQLRequest,
+    schema: State<Schema>,
+    context: State<Context>,
+) -> juniper_rocket::GraphQLResponse {
+    request.execute(&schema, &context)
+}
+
+#[rocket::post("/graphql", data = "<request>")]
+fn post_graphql_handler(
+    request: juniper_rocket::GraphQLRequest,
+    schema: State<Schema>,
+    context: State<Context>,
+) -> juniper_rocket::GraphQLResponse {
+    request.execute(&schema, &context)
+}
+
 fn main() {
-    let ctx = Context;
-
-    let query = "query { helloWorld(name: \"Ferris\") }";
-
-    let (result, errors) = juniper::execute(
-        query,
-        None,
-        &Schema::new(Query, Mutation),
-        &juniper::Variables::new(),
-        &ctx,
-    )
-        .unwrap();
-
-    assert_eq!(errors.len(), 0);
-    assert_eq!(
-        result
-            .as_object_value()
-            .unwrap()
-            .get_field_value("helloWorld")
-            .unwrap()
-            .as_scalar_value::<String>()
-            .unwrap(),
-        "Hello, Ferris!",
-    );
+    rocket::ignite()
+        .manage(Context { 0: 1 })
+        .manage(Schema::new(Query {}, Mutation {}))
+        .mount(
+            "/",
+            rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],
+        )
+        .launch();
 }
