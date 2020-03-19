@@ -1,10 +1,10 @@
-#schema {
-#    query: Query
+schema {
+    query: Query
 #    mutation: Mutation
-#}
-#type Query {
-#    getFindReplaceCommand(id: ID!): FindReplaceCommand
-#}
+}
+type Query {
+    getFindReplaceCommand(id: ID!): String @juniper(ownership: "owned")
+}
 #type Mutation {
 #    createCommand(find: String!, replace: String!): String!
 #}
@@ -14,15 +14,15 @@
 #    command: String!
 #}
 
-schema {
-    query: Query
-    mutation: Mutation
-}
-
-type Query {
-helloWorld(name: String!): String! @juniper(ownership: "owned")
-}
-
-type Mutation {
-noop: Boolean!
-}
+#schema {
+#    query: Query
+#    mutation: Mutation
+#}
+#
+#type Query {
+#helloWorld(name: String!): String! @juniper(ownership: "owned")
+#}
+#
+#type Mutation {
+#noop: Boolean!
+#}

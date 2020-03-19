@@ -6,7 +6,6 @@ use juniper::{FieldResult, Executor};
 
 use rocket::{response::content, State};
 
-
 // This is the important line
 graphql_schema_from_file!("schema.graphql");
 
@@ -17,26 +16,23 @@ impl juniper::Context for Context {}
 pub struct Query;
 
 impl QueryFields for Query {
-    fn field_hello_world(&self,
-                         _executor: &Executor<'_, Context>,
-                         name: String,
-    ) -> FieldResult<String> {
-        _executor.context().0;
-        Ok(format!("Hello, {}!", name))
+    fn field_get_find_replace_command(&self, _executor: &Executor<'_, Context>, id: juniper::ID) -> FieldResult<Option<String>> {
+        let a = String::from(format!("Hello, {}!", _executor.context().0));
+        Ok(Option::from(a))
     }
 }
 
 pub struct Mutation;
 
-impl MutationFields for Mutation {
-    fn field_noop(&self, _executor: &Executor<'_, Context>) -> FieldResult<&bool> {
-        Ok(&true)
-    }
-}
+// impl MutationFields for Mutation {
+//     fn field_noop(&self, _executor: &Executor<'_, Context>) -> FieldResult<&bool> {
+//         Ok(&true)
+//     }
+// }
 
 #[rocket::get("/")]
 fn graphiql() -> content::Html<String> {
-    juniper_rocket::graphiql_source("/graphql")
+    juniper_rocket::playground_source("/graphql")
 }
 
 #[rocket::get("/graphql?<request>")]
@@ -60,7 +56,7 @@ fn post_graphql_handler(
 fn main() {
     rocket::ignite()
         .manage(Context { 0: 1 })
-        .manage(Schema::new(Query {}, Mutation {}))
+        .manage(Schema::new(Query {}, juniper::EmptyMutation::new()))
         .mount(
             "/",
             rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],
