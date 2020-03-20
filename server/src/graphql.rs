@@ -1,4 +1,4 @@
-use juniper::{FieldResult,GraphQLObject,RootNode};
+use juniper::{FieldResult, GraphQLObject, RootNode};
 
 #[derive(GraphQLObject)]
 struct FindReplaceCommand {
@@ -30,9 +30,7 @@ impl Query {
 
 pub struct Mutation;
 
-#[juniper::object(
-Context = Context,
-)]
+#[juniper::object(Context = Context)]
 impl Mutation {
     #[graphql(description = "Returns a url for accessing the tupel")]
     fn create_command(find: String, replace: String) -> FieldResult<String> {
