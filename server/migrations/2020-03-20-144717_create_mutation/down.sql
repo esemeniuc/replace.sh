@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS find_replace_command;
+DROP TABLE IF EXISTS find_replace_commands;

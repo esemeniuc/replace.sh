@@ -33,7 +33,7 @@ impl Query {
     #[graphql(description = "A tuple for the user's form submission")]
     fn get_find_replace_command(context: &Context, shortcode: String) -> FieldResult<Option<FindReplaceCommand>> {
         match context.pool.get_find_replace_command(shortcode) {
-            Some(fsc) => Ok(Option::from(FindReplaceCommand::from(fsc))),
+            Some(frc) => Ok(Option::from(FindReplaceCommand::from(frc))),
             None => Ok(None)
         }
     }
@@ -46,15 +46,12 @@ impl Mutation {
     #[graphql(description = "Returns a url for accessing the tuple")]
     fn create_command(find: String, replace: String) -> FieldResult<String> {
         use names::{Generator, Name};
-
         let mut generator = Generator::with_naming(Name::Numbered);
         match generator.next() {
             Some(phrase) => {
                 Ok(String::from("Foo"))
             }
-            None => Err(juniper::FieldError::new(
-                "Cannot generate shortcode",
-                graphql_value!({"type": "NO_SHORTCODE"})))
+            None => Err(juniper::FieldError::new("Cannot generate shortcode", graphql_value!({"type": "NO_SHORTCODE"})))
         }
     }
 }
