@@ -1,6 +1,6 @@
-#[derive(Queryable)]
+#[derive(Queryable, Debug)]
 pub struct FindReplaceCommand {
-    pub id: i64,
+    pub id: i32,
     pub find: String,
     pub replace: String,
     pub command: String,
