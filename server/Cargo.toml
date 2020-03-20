@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 diesel = { version = "1.4.3", features = ["sqlite"] }
+dotenv = "0.15.0"
 juniper = "0.14.2"
 juniper_rocket = "0.5.2"
 rocket = "0.4.4"

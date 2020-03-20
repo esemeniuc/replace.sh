@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS find_replace_command;

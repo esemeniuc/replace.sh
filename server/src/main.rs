@@ -1,10 +1,15 @@
 #![feature(decl_macro, proc_macro_hygiene)]
-extern crate juniper;
+#[macro_use]
+extern crate diesel;
+// extern crate juniper;
+// extern crate dotenv;
 
 use rocket::{response::content, State};
 
 mod graphql;
-
+mod db;
+mod schema;
+mod models;
 
 #[rocket::get("/")]
 fn graphiql() -> content::Html<String> {

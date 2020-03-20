@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS find_replace_commands (
+  id INTEGER NOT NULL PRIMARY KEY,
+  find VARCHAR NOT NULL,
+  replace VARCHAR NOT NULL,
+  command VARCHAR NOT NULL,
+  shortcode VARCHAR NOT NULL
+);
