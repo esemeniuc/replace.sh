@@ -32,7 +32,7 @@ pub struct Mutation;
 
 #[juniper::object(Context = Context)]
 impl Mutation {
-    #[graphql(description = "Returns a url for accessing the tupel")]
+    #[graphql(description = "Returns a url for accessing the tuple")]
     fn create_command(find: String, replace: String) -> FieldResult<String> {
         Ok(String::from("Foo"))
     }
