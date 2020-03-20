@@ -1,10 +1,12 @@
 #![feature(decl_macro, proc_macro_hygiene)]
 #[macro_use]
 extern crate diesel;
-// extern crate juniper;
+#[macro_use]
+extern crate juniper;
 // extern crate dotenv;
 
 use rocket::{response::content, State};
+use crate::db::DatabasePool;
 
 mod graphql;
 mod db;
@@ -37,7 +39,7 @@ fn post_graphql_handler(
 fn main() {
     rocket::ignite()
         .manage(graphql::create_schema())
-        .manage(graphql::Context { 0: 1 })
+        .manage(graphql::Context { pool: DatabasePool })
         .mount(
             "/",
             rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],

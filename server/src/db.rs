@@ -12,17 +12,17 @@ pub fn establish_connection() -> SqliteConnection {
         .expect(&format!("Error connecting to {}", database_url))
 }
 
-struct DatabasePool;
+pub struct DatabasePool;
 
 impl DatabasePool {
     // fn get_connection(&self) -> DatabasePool { DatabasePool }
-    fn find_human(&self, user_shortcode: &str) -> FindReplaceCommand {
+    pub fn get_find_replace_command(&self, user_shortcode: String) -> Option<FindReplaceCommand> {
         use crate::schema::find_replace_commands::dsl::*;
 
         let connection = establish_connection();
         let results = find_replace_commands.filter(shortcode.eq(user_shortcode))
-            .first::<FindReplaceCommand>(&connection)
-            .expect("Error loading posts");
+            .first::<FindReplaceCommand>(&connection).ok();
+            // .expect("Error loading posts");
 
         println!("Displaying posts");
         println!("{:#?}", results);
