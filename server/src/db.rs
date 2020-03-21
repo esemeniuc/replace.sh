@@ -4,18 +4,17 @@ use dotenv::dotenv;
 use std::env;
 use crate::models::FindReplaceCommand;
 
-// #[derive(Clone)]
+pub type DbPool = Pool<ConnectionManager<SqliteConnection>>;
+
 pub struct DatabasePool {
     pub connection: DbPool,
 }
 
-pub type DbPool = Pool<ConnectionManager<SqliteConnection>>;
-
-// impl Default for DatabasePool {
-//     fn default() -> Self {
-//         DatabasePool { connection: DatabasePool::establish_connection() }
-//     }
-// }
+impl Default for DatabasePool {
+    fn default() -> Self {
+        DatabasePool { connection: DatabasePool::establish_connection() }
+    }
+}
 
 impl DatabasePool {
     pub fn establish_connection() -> DbPool {
