@@ -1,5 +1,5 @@
 use diesel::prelude::*;
-use diesel::r2d2::{Pool, PooledConnection, ConnectionManager, PoolError};
+use diesel::r2d2::{Pool, ConnectionManager};
 use dotenv::dotenv;
 use std::env;
 use crate::models::FindReplaceCommand;
@@ -21,15 +21,9 @@ impl DatabasePool {
     pub fn establish_connection() -> DbPool {
         dotenv().ok();
 
-        let database_url = env::var("DATABASE_URL")
-            .expect("DATABASE_URL must be set");
-        SqliteConnection::establish(&database_url)
-            .expect(&format!("Error connecting to {}", database_url));
-
-
+        let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
         let manager = ConnectionManager::<SqliteConnection>::new(database_url);
-        let pool = Pool::builder().build(manager).expect("Failed to create pool.");
-        pool
+        Pool::builder().build(manager).expect("Failed to create pool.")
     }
 
     pub fn get_find_replace_command(&self, user_shortcode: String) -> Option<FindReplaceCommand> {
