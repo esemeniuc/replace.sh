@@ -39,7 +39,7 @@ fn post_graphql_handler(
 fn main() {
     rocket::ignite()
         .manage(graphql::create_schema())
-        .manage(graphql::Context { pool: DatabasePool })
+        .manage(graphql::Context { pool: DatabasePool { connection: DatabasePool::establish_connection() } })
         .mount(
             "/",
             rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],

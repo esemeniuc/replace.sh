@@ -17,6 +17,7 @@ impl std::convert::From<crate::models::FindReplaceCommand> for FindReplaceComman
     }
 }
 
+// #[derive(Default)]
 pub struct Context {
     pub pool: crate::db::DatabasePool,
 }

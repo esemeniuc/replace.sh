@@ -1,32 +1,50 @@
 use diesel::prelude::*;
+use diesel::r2d2::{Pool, PooledConnection, ConnectionManager, PoolError};
 use dotenv::dotenv;
 use std::env;
 use crate::models::FindReplaceCommand;
 
-pub fn establish_connection() -> SqliteConnection {
-    dotenv().ok();
-
-    let database_url = env::var("DATABASE_URL")
-        .expect("DATABASE_URL must be set");
-    SqliteConnection::establish(&database_url)
-        .expect(&format!("Error connecting to {}", database_url))
+// #[derive(Clone)]
+pub struct DatabasePool {
+    pub connection: DbPool,
 }
 
-pub struct DatabasePool;
+pub type DbPool = Pool<ConnectionManager<SqliteConnection>>;
+
+// impl Default for DatabasePool {
+//     fn default() -> Self {
+//         DatabasePool { connection: DatabasePool::establish_connection() }
+//     }
+// }
 
 impl DatabasePool {
-    // fn get_connection(&self) -> DatabasePool { DatabasePool }
+    pub fn establish_connection() -> DbPool {
+        dotenv().ok();
+
+        let database_url = env::var("DATABASE_URL")
+            .expect("DATABASE_URL must be set");
+        SqliteConnection::establish(&database_url)
+            .expect(&format!("Error connecting to {}", database_url));
+
+
+        let manager = ConnectionManager::<SqliteConnection>::new(database_url);
+        let pool = Pool::builder().build(manager).expect("Failed to create pool.");
+        pool
+    }
+
     pub fn get_find_replace_command(&self, user_shortcode: String) -> Option<FindReplaceCommand> {
         use crate::schema::find_replace_commands::dsl::*;
+        let x = &self.connection.get().unwrap();
 
-        let connection = establish_connection();
         let results = find_replace_commands.filter(shortcode.eq(user_shortcode))
-            .first::<FindReplaceCommand>(&connection).ok();
-            // .expect("Error loading posts");
+            .first::<FindReplaceCommand>(x).ok();
+        // .expect("Error loading posts");
 
         println!("Displaying posts");
         println!("{:#?}", results);
         results
     }
-    // fn insert_human(&self, _human: &NewHuman) -> FieldResult<Human> { Err("")? }
+    // fn insert_frc(&self, frc: &FindReplaceCommand) -> FieldResult<Human> {
+    //     Err("")?
+    // }
 }
