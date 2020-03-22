@@ -1,3 +1,6 @@
+pub mod find_replace_command;
+// mod schema;
+
 #[derive(Queryable, Debug)]
 pub struct FindReplaceCommand {
     pub id: i32,

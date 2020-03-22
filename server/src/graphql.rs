@@ -1,4 +1,5 @@
 use juniper::{FieldResult, GraphQLObject, RootNode};
+use crate::models::find_replace_command;
 
 #[derive(GraphQLObject)]
 struct FindReplaceCommand {
@@ -19,7 +20,7 @@ impl std::convert::From<crate::models::FindReplaceCommand> for FindReplaceComman
 
 // #[derive(Default)]
 pub struct Context {
-    pub pool: crate::db::DatabasePool,
+    pub pool: crate::db::DbPool,
 }
 
 impl juniper::Context for Context {}
@@ -33,7 +34,8 @@ Context = Context,
 impl Query {
     #[graphql(description = "A tuple for the user's form submission")]
     fn get_find_replace_command(context: &Context, shortcode: String) -> FieldResult<Option<FindReplaceCommand>> {
-        match context.pool.get_find_replace_command(shortcode) {
+        let conn = context.pool.get().unwrap();
+        match find_replace_command::get_find_replace_command(&conn, shortcode) {
             Some(frc) => Ok(Option::from(FindReplaceCommand::from(frc))),
             None => Ok(None)
         }
@@ -50,6 +52,7 @@ impl Mutation {
         let mut generator = Generator::with_naming(Name::Numbered);
         match generator.next() {
             Some(phrase) => {
+
                 Ok(String::from("Foo"))
             }
             None => Err(juniper::FieldError::new("Cannot generate shortcode", graphql_value!({"type": "NO_SHORTCODE"})))
