@@ -1,6 +1,6 @@
 pub mod find_replace_command;
-// mod schema;
-use crate::schema::find_replace_commands;
+mod schema;
+use schema::find_replace_commands;
 
 #[derive(Queryable, Debug, Insertable)]
 #[table_name = "find_replace_commands"]

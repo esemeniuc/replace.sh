@@ -2,10 +2,10 @@ use juniper::{FieldResult, GraphQLObject, RootNode};
 use crate::models::find_replace_command;
 
 #[derive(GraphQLObject)]
-struct FindReplaceCommand {
-    find: String,
-    replace: String,
-    command: String,
+pub(crate) struct FindReplaceCommand {
+    pub(crate) find: String,
+    pub(crate) replace: String,
+    pub(crate) command: String,
 }
 
 impl std::convert::From<crate::models::FindReplaceCommand> for FindReplaceCommand {
@@ -47,13 +47,24 @@ pub struct Mutation;
 #[juniper::object(Context = Context)]
 impl Mutation {
     #[graphql(description = "Returns a url for accessing the tuple")]
-    fn create_command(find: String, replace: String) -> FieldResult<String> {
+    fn create_command(context: &Context, find: String, replace: String) -> FieldResult<String> {
         use names::{Generator, Name};
         let mut generator = Generator::with_naming(Name::Numbered);
         match generator.next() {
             Some(phrase) => {
+                let a = crate::models::FindReplaceCommand {
+                    id: 0,
+                    find: find,
+                    replace: replace,
+                    command: "c".to_string(),
+                    shortcode: "s".to_string(),
+                };
+                let conn = context.pool.get().unwrap();
 
-                Ok(String::from("Foo"))
+                match find_replace_command::insert_find_replace_command(&conn, &a) {
+                    Ok(_) => Ok(a.shortcode),
+                    Err(_) => Err(juniper::FieldError::new("Cannot save to db", graphql_value!({"type": "NO_DB_SAVE"})))
+                }
             }
             None => Err(juniper::FieldError::new("Cannot generate shortcode", graphql_value!({"type": "NO_SHORTCODE"})))
         }

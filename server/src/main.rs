@@ -9,7 +9,7 @@ use rocket::{response::content, State};
 
 mod graphql;
 mod db;
-mod schema;
+// mod schema;
 mod models;
 
 #[rocket::get("/")]
