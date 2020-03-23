@@ -1,10 +1,7 @@
 import React from "react";
-import {ApolloProvider} from "@apollo/react-hooks";
-import ApolloClient from "apollo-client";
-import {InMemoryCache} from "apollo-cache-inmemory";
+import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client';
 import {PageContainer} from "./PageContainer";
 import ReactGA from 'react-ga';
-import {HttpLink} from "apollo-boost";
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),

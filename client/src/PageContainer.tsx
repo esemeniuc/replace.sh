@@ -1,6 +1,5 @@
 import React from "react";
-import {gql} from "apollo-boost";
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {gql, useMutation, useQuery} from '@apollo/client';
 import Home from "./Home";
 import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
 import {CreateComand} from "./__generated__/CreateComand";
