@@ -6,17 +6,17 @@ import {GetUploadTransactionId} from "./__generated__/GetUploadTransactionId";
 import Home from "./Home";
 
 const GET_TXN_ID = gql`
-    query GetUploadTransactionId {
-        getUploadTransactionId
+    query GetFindReplaceCommand{
+        getFindReplaceCommand(shortcode: "hideous-ground-0042"){
+            find
+            replace
+            command
+        }
     }
 `;
 const SEND_FAX = gql`
-    mutation SendFax($to: String!, $uploadTransactionId: ID!) {
-        fax(to: $to, uploadTransactionId: $uploadTransactionId) {
-            id
-            numPages
-            cost
-        }
+    mutation CreateComand {
+        createCommand(find: "a", replace: "b")
     }
 `;
 

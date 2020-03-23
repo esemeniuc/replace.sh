@@ -4,9 +4,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetUploadTransactionId
+// GraphQL mutation operation: CreateComand
 // ====================================================
 
-export interface GetUploadTransactionId {
-  getUploadTransactionId: string;
+export interface CreateComand {
+  createCommand: string;
 }
