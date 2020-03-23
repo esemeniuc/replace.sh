@@ -1,9 +1,9 @@
 import React from "react";
 import {gql} from "apollo-boost";
-import {SendFax} from "./__generated__/SendFax";
 import {useMutation, useQuery} from "@apollo/react-hooks";
-import {GetUploadTransactionId} from "./__generated__/GetUploadTransactionId";
 import Home from "./Home";
+import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
+import {CreateComand} from "./__generated__/CreateComand";
 
 const GET_TXN_ID = gql`
     query GetFindReplaceCommand{
@@ -27,8 +27,8 @@ export function PageContainer() {
         error: uploadTxnError,
         data: uploadTxnData,
         refetch: refetchUploadTransactionId
-    } = useQuery<GetUploadTransactionId>(GET_TXN_ID);
-    const [sendFax, {data, loading, error}] = useMutation<SendFax>(SEND_FAX);
+    } = useQuery<GetFindReplaceCommand>(GET_TXN_ID);
+    const [sendFax, {data, loading, error}] = useMutation<CreateComand>(SEND_FAX);
 
     return <Home onNext={() => null}/>;
 
