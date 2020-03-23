@@ -3,13 +3,12 @@
 extern crate diesel;
 #[macro_use]
 extern crate juniper;
-// extern crate dotenv;
 
-use rocket::{response::content, State};
+use rocket::{response::content, State, http::Method};
+use rocket_cors::AllowedHeaders;
 
 mod graphql;
 mod db;
-// mod schema;
 mod models;
 
 #[rocket::get("/")]
@@ -36,9 +35,15 @@ fn post_graphql_handler(
 }
 
 fn main() {
+    let cors = rocket_cors::CorsOptions {
+        allowed_methods: vec![Method::Get, Method::Post, Method::Options].into_iter().map(From::from).collect(),
+        ..Default::default()
+    }.to_cors().expect("Unable to create CORS handler");
+
     rocket::ignite()
         .manage(graphql::create_schema())
         .manage(graphql::Context { pool: db::establish_connection() })
+        .attach(cors)
         .mount(
             "/",
             rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],
