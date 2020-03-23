@@ -4,9 +4,13 @@ import ApolloClient from "apollo-client";
 import {InMemoryCache} from "apollo-cache-inmemory";
 import {PageContainer} from "./PageContainer";
 import ReactGA from 'react-ga';
+import {HttpLink} from "apollo-boost";
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
+    link: new HttpLink({
+        uri: 'http://localhost:8080/',
+    })
 });
 
 export default function App() {
