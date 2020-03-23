@@ -1,0 +1,35 @@
+type Query {
+    getUploadTransactionId: ID!
+    getFaxStatus(id: ID!): Status
+}
+type Mutation {
+    """uploadTransactionId is created by getUploadTransactionId()
+    it is used for finding the uploaded files associated with this fax
+    returns null if phone number is invalid or txn id not found"""
+    fax(to: String!, uploadTransactionId: ID!): Order
+}
+
+type Order {
+    """Price is in the format of numbers followed by 2 decimal places"""
+    id: ID!
+    numPages: Int!
+    cost: String!
+}
+
+enum FaxState {
+    COMPLETED
+    SENDING
+    ERROR
+}
+
+type Status {
+    id: ID!
+    faxState: FaxState!
+    percentComplete: Int
+}
+
+#this scalar is provided by apollo-server when not using makeExecutableSchema()
+#we add this seperately as its needed for codegen
+#see https://www.apollographql.com/docs/apollo-server/migration-two-dot/#using-an-existing-schema
+#see https://www.apollographql.com/docs/apollo-server/data/file-uploads/
+#scalar Upload
