@@ -58,8 +58,7 @@ impl Mutation {
             Some(phrase) => {
                 let conn = context.pool.get().unwrap();
                 let command = generate_command(&find, &replace);
-                let frc = crate::models::FindReplaceCommand {
-                    id: 0,
+                let frc = crate::models::NewFindReplaceCommand {
                     find,
                     replace,
                     command,

@@ -1,4 +1,4 @@
-use crate::models::FindReplaceCommand;
+use crate::models::{FindReplaceCommand, NewFindReplaceCommand};
 use diesel::prelude::*;
 use diesel::insert_into;
 
@@ -12,6 +12,6 @@ pub fn get_find_replace_command(conn: &crate::db::DbPoolConn, user_shortcode: St
     results
 }
 
-pub fn insert_find_replace_command(conn: &crate::db::DbPoolConn, to_insert: &FindReplaceCommand) -> QueryResult<usize> {
+pub fn insert_find_replace_command(conn: &crate::db::DbPoolConn, to_insert: &NewFindReplaceCommand) -> QueryResult<usize> {
     insert_into(crate::models::schema::find_replace_commands::table).values(to_insert).execute(conn)
 }
