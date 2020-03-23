@@ -6,7 +6,7 @@ import {PageContainer} from "./PageContainer";
 const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-        uri: 'http://localhost:8080/',
+        uri: 'http://localhost:8001/graphql',
     })
 });
 
