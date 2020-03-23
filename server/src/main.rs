@@ -5,7 +5,6 @@ extern crate diesel;
 extern crate juniper;
 
 use rocket::{response::content, State, http::Method};
-use rocket_cors::AllowedHeaders;
 
 mod graphql;
 mod db;
