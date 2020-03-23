@@ -1,5 +1,5 @@
 import React from "react";
-import Page from "../components/Page";
+import Page from "./components/Page";
 import {Box, Button, Card, CardContent, CardHeader, Divider, Grid, Typography} from "@material-ui/core";
 import {
     AssignmentTurnedIn,
