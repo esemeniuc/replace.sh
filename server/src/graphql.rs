@@ -42,6 +42,10 @@ impl Query {
     }
 }
 
+fn generate_command(find: &String, replace: &String) -> String {
+    format!("sed 's/{}/{}/g'", find, replace) //todo: escape properly
+}
+
 pub struct Mutation;
 
 #[juniper::object(Context = Context)]
@@ -52,17 +56,18 @@ impl Mutation {
         let mut generator = Generator::with_naming(Name::Numbered);
         match generator.next() {
             Some(phrase) => {
-                let a = crate::models::FindReplaceCommand {
-                    id: 0,
-                    find: find,
-                    replace: replace,
-                    command: "c".to_string(),
-                    shortcode: "s".to_string(),
-                };
                 let conn = context.pool.get().unwrap();
+                let command = generate_command(&find, &replace);
+                let frc = crate::models::FindReplaceCommand {
+                    id: 0,
+                    find,
+                    replace,
+                    command,
+                    shortcode: phrase,
+                };
 
-                match find_replace_command::insert_find_replace_command(&conn, &a) {
-                    Ok(_) => Ok(a.shortcode),
+                match find_replace_command::insert_find_replace_command(&conn, &frc) {
+                    Ok(_) => Ok(frc.shortcode),
                     Err(_) => Err(juniper::FieldError::new("Cannot save to db", graphql_value!({"type": "NO_DB_SAVE"})))
                 }
             }
