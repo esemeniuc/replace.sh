@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-prod": "NODE_ENV=production sudo react-scripts start",
+    "start-prod": "NODE_ENV=production react-scripts start",
     "build": "react-scripts build",
     "postinstall": "if [[ -f apollo.config.js ]]; then yarn codegen; fi #for docker build to avoid running before source files are copied",
     "codegen": "apollo client:codegen --target typescript",

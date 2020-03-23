@@ -1,10 +1,9 @@
 import React from "react";
 import {gql, useMutation, useQuery} from '@apollo/client';
-import Home from "./Home";
 import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
 import {CreateComand} from "./__generated__/CreateComand";
 
-const GET_TXN_ID = gql`
+const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand{
         getFindReplaceCommand(shortcode: "hideous-ground-0042"){
             find
@@ -13,7 +12,7 @@ const GET_TXN_ID = gql`
         }
     }
 `;
-const SEND_FAX = gql`
+const CREATE_COMMAND = gql`
     mutation CreateComand {
         createCommand(find: "a", replace: "b")
     }
@@ -22,18 +21,18 @@ const SEND_FAX = gql`
 export function PageContainer() {
 
     const {
-        loading: uploadTxnLoading,
-        error: uploadTxnError,
-        data: uploadTxnData,
-        refetch: refetchUploadTransactionId
-    } = useQuery<GetFindReplaceCommand>(GET_TXN_ID);
-    const [sendFax, {data, loading, error}] = useMutation<CreateComand>(SEND_FAX);
+        loading: frcLoading,
+        error: frcError,
+        data: frcData,
+        refetch: frcRefetch
+    } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND);
+    const [createCommand, {data, loading, error}] = useMutation<CreateComand>(CREATE_COMMAND);
 
-    return <Home onNext={() => null}/>;
+    // return <Home onNext={() => null}/>;
+    const resp = createCommand({variables: {}}).then(value => console.log("got mut response", value));
 
-
-    // if (uploadTxnLoading) return <>Loading!</>; //TODO make loading and error pages
-    // if (uploadTxnError || !uploadTxnData) return <>Error!</>;
-    // return null;
+    if (frcLoading) return <>Loading!</>; //TODO make loading and error pages
+    if (frcError || !frcData) return <>Error!</>;
+    return <>{frcData?.getFindReplaceCommand}</>;
 
 }
