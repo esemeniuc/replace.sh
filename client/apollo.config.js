@@ -1,7 +1,7 @@
 module.exports = {
     client: {
         service: {
-            name: 'faxtail',
+            name: 'replace.sh',
             localSchemaFile: 'schema.graphql'
         }
     }
