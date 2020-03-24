@@ -13,8 +13,8 @@ const GET_FIND_REPLACE_COMMAND = gql`
     }
 `;
 const CREATE_COMMAND = gql`
-    mutation CreateComand {
-        createCommand(find: "a", replace: "b")
+    mutation CreateComand ($find: String!, $replace: String!) {
+        createCommand(find: $find, replace: $replace)
     }
 `;
 
@@ -27,8 +27,8 @@ export function PageContainer() {
     // return <p>happy happy</p>
 
 
-    const [find, setFind] = useState("");
-    const [replace, setReplace] = useState("");
+    const [find, setFind] = useState("aa");
+    const [replace, setReplace] = useState("bb");
     const {
         loading: frcLoading,
         error: frcError,
@@ -40,13 +40,15 @@ export function PageContainer() {
     return <>
         <form>
             Find
-            <textarea onChange={(e) => {
-                setFind(e.target.value);
-            }}/>
+            <textarea value={find}
+                      onChange={(e) => {
+                          setFind(e.target.value);
+                      }}/>
             Replace
-            <textarea onChange={(e) => {
-                setReplace(e.target.value);
-            }}/>
+            <textarea value={replace}
+                      onChange={(e) => {
+                          setReplace(e.target.value);
+                      }}/>
             <button onClick={(e) => {
                 e.preventDefault();
                 createCommand({variables: {find, replace}}).then(value => console.log("got mut response", value));
