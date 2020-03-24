@@ -12,7 +12,6 @@ impl std::convert::From<crate::models::FindReplaceCommandRow> for FindReplaceCom
     }
 }
 
-// #[derive(Default)]
 pub struct Context {
     pub pool: crate::db::DbPool,
 }
@@ -45,7 +44,7 @@ pub struct Mutation;
 #[juniper::object(Context = Context)]
 impl Mutation {
     #[graphql(description = "Returns a url for accessing the tuple")]
-    fn create_command(context: &Context, find: String, replace: String) -> FieldResult<String> {
+    fn create_command(context: &Context, find: String, replace: String) -> FieldResult<FindReplaceCommand> {
         use names::{Generator, Name};
         let mut generator = Generator::with_naming(Name::Numbered);
         match generator.next() {
@@ -62,7 +61,7 @@ impl Mutation {
                 println!("inserting {:?}", frc);
 
                 match find_replace_command::insert_find_replace_command(&conn, &frc) {
-                    Ok(_) => Ok(frc.shortcode),
+                    Ok(_) => Ok(frc),
                     Err(_) => Err(juniper::FieldError::new("Cannot save to db", graphql_value!({"type": "NO_DB_SAVE"})))
                 }
             }
