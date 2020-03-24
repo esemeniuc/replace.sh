@@ -6,7 +6,10 @@ import {CreateComand} from "./__generated__/CreateComand";
 
 const CREATE_COMMAND = gql`
     mutation CreateComand ($find: String!, $replace: String!) {
-        createCommand(find: $find, replace: $replace)
+        createCommand(find: $find, replace: $replace){
+            command
+            shortcode
+        }
     }
 `;
 
@@ -37,5 +40,9 @@ export default function Home() {
                 Submit
             </button>
         </form>
+        {ccData && <>
+            {ccData?.createCommand.command}
+            {ccData?.createCommand.shortcode}
+        </>}
     </Page>;
 }

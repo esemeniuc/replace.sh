@@ -7,6 +7,17 @@
 // GraphQL mutation operation: CreateComand
 // ====================================================
 
+export interface CreateComand_createCommand {
+  __typename: "FindReplaceCommand";
+  command: string;
+  shortcode: string;
+}
+
 export interface CreateComand {
-  createCommand: string;
+  createCommand: CreateComand_createCommand;
+}
+
+export interface CreateComandVariables {
+  find: string;
+  replace: string;
 }
