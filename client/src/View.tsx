@@ -1,6 +1,6 @@
 import Page from "./components/Page";
 import ReactGA from 'react-ga';
-import React, {useState} from "react";
+import React from "react";
 import {gql, useQuery} from '@apollo/client';
 import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
 

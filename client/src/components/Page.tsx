@@ -10,7 +10,7 @@ export default function Page(props: { children: React.ReactNode, style?: React.C
                 <Print/><Box mr={1}/>
                 <Link href={BACKEND_ROOT_URL} color="inherit">
                     <Typography variant="h6" color="inherit" noWrap>
-                        Replace.sh
+                        replace.sh
                     </Typography>
                 </Link>
             </Toolbar>
@@ -22,7 +22,7 @@ export default function Page(props: { children: React.ReactNode, style?: React.C
                     <Typography variant="body2" color="textSecondary" align="center">
                         {'Copyright © '}
                         <Link color="inherit" href={BACKEND_ROOT_URL}>
-                            Replace.sh
+                            replace.sh
                         </Link>
                         {` ${new Date().getFullYear()}`}
                     </Typography>
