@@ -18,11 +18,24 @@ const CREATE_COMMAND = gql`
     }
 `;
 
-export default function Home() {
-    ReactGA.pageview('/home');
+function Codebox(props: { cmd: string }) {
     const clipboard = useClipboard({
         copiedTimeout: 1500 // duration in milliseconds
     });
+    return <Tooltip title="Copied to clipboard!" open={clipboard.copied}>
+        <Box>{/* need to avoid refs*/}
+            <SyntaxHighlighter onClick={() => clipboard.copy(props.cmd)}
+                               language="bash"
+                               style={tomorrowNight}>
+                {props.cmd}
+            </SyntaxHighlighter>
+        </Box>
+    </Tooltip>;
+}
+
+export default function Home() {
+    ReactGA.pageview('/home');
+
     const [find, setFind] = useState("");
     const [replace, setReplace] = useState("");
 
@@ -82,16 +95,7 @@ export default function Home() {
         </form>
         {
             ccData && <Box m={4}>
-                <Tooltip title="Copied to clipboard!" open={clipboard.copied}>
-                    <Box>
-                        <SyntaxHighlighter onClick={() => clipboard.copy(cmd)}
-                                           language="bash"
-                                           style={tomorrowNight}>
-                            {cmd}
-                        </SyntaxHighlighter>
-                    </Box>
-                </Tooltip>
-
+                <Codebox cmd={cmd}/>
             </Box>
         }
     </Page>;
