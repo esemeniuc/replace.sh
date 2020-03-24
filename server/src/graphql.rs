@@ -65,6 +65,8 @@ impl Mutation {
                     shortcode: phrase,
                 };
 
+                println!("inserting {:?}", frc);
+
                 match find_replace_command::insert_find_replace_command(&conn, &frc) {
                     Ok(_) => Ok(frc.shortcode),
                     Err(_) => Err(juniper::FieldError::new("Cannot save to db", graphql_value!({"type": "NO_DB_SAVE"})))

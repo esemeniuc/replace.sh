@@ -3,6 +3,8 @@
 extern crate diesel;
 #[macro_use]
 extern crate juniper;
+#[macro_use]
+extern crate diesel_migrations;
 
 use rocket::{response::content, State, http::Method};
 
@@ -38,10 +40,12 @@ fn main() {
         allowed_methods: vec![Method::Get, Method::Post, Method::Options].into_iter().map(From::from).collect(),
         ..Default::default()
     }.to_cors().expect("Unable to create CORS handler");
+    let context = graphql::Context { pool: db::establish_connection() };
+    db::run_migrations(&context.pool).expect("Unable to run migrations");
 
     rocket::ignite()
         .manage(graphql::create_schema())
-        .manage(graphql::Context { pool: db::establish_connection() })
+        .manage(context)
         .attach(cors)
         .mount(
             "/",
