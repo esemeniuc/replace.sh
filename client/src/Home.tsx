@@ -7,6 +7,7 @@ import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {tomorrowNight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {useClipboard} from "use-clipboard-copy";
+import {VIEW_FRC_ENDPOINT} from "./config";
 
 const CREATE_COMMAND = gql`
     mutation CreateComand ($find: String!, $replace: String!) {
@@ -28,6 +29,7 @@ export default function Home() {
     const [createCommand, {data: ccData, loading: ccLoading, error: ccError}] = useMutation<CreateComand>(CREATE_COMMAND);
     if (ccLoading) return <>Loading!</>; //TODO make loading and error pages
     if (ccError) return <>Error!</>;
+    const cmd = `${ccData?.createCommand.command} #wtf is this? ${VIEW_FRC_ENDPOINT}/${ccData?.createCommand.shortcode}`;
     return <Page>
         <form>
             <Box m={4}>
@@ -78,21 +80,20 @@ export default function Home() {
             </Box>
 
         </form>
-        {ccData && <Box m={4}>
-            {/*    {ccData?.createCommand.command}*/}
-            {/*    {ccData?.createCommand.shortcode}*/}
+        {
+            ccData && <Box m={4}>
+                <Tooltip title="Copied to clipboard!" open={clipboard.copied}>
+                    <Box>
+                        <SyntaxHighlighter onClick={() => clipboard.copy(cmd)}
+                                           language="bash"
+                                           style={tomorrowNight}>
+                            {cmd}
+                        </SyntaxHighlighter>
+                    </Box>
+                </Tooltip>
 
-            <Tooltip title="Copied to clipboard!" open={clipboard.copied}>
-                <Box>
-                    <SyntaxHighlighter onClick={() => clipboard.copy(find)}
-                                       language="javascript"
-                                       style={tomorrowNight}>
-                        {find}
-                    </SyntaxHighlighter>
-                </Box>
-            </Tooltip>
-
-        </Box>}
+            </Box>
+        }
     </Page>;
 }
 

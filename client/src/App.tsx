@@ -1,12 +1,13 @@
 import React from "react";
 import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client';
 import {PageContainer} from "./PageContainer";
+import {GRAPHQL_ENDPOINT} from "./config";
 // import ReactGA from 'react-ga';
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-        uri: 'http://localhost:8001/graphql',
+        uri: GRAPHQL_ENDPOINT,
     })
 });
 
