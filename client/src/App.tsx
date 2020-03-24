@@ -1,6 +1,7 @@
 import React from "react";
 import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client';
 import {PageContainer} from "./PageContainer";
+import {BrowserRouter as Router} from "react-router-dom";
 // import ReactGA from 'react-ga';
 
 const client = new ApolloClient({
@@ -17,7 +18,9 @@ export default function App() {
     //     gaOptions: {siteSpeedSampleRate: 100}
     // });
 
-    return <ApolloProvider client={client}>
-        <PageContainer/>
-    </ApolloProvider>
+    return <Router>
+        <ApolloProvider client={client}>
+            <PageContainer/>
+        </ApolloProvider>
+    </Router>;
 }
