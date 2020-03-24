@@ -1,19 +1,13 @@
-use juniper::{FieldResult, GraphQLObject, RootNode};
-use crate::models::find_replace_command;
+use juniper::{FieldResult, RootNode};
+use crate::models::{FindReplaceCommand, find_replace_command};
 
-#[derive(GraphQLObject)]
-pub(crate) struct FindReplaceCommand {
-    pub(crate) find: String,
-    pub(crate) replace: String,
-    pub(crate) command: String,
-}
-
-impl std::convert::From<crate::models::FindReplaceCommand> for FindReplaceCommand {
-    fn from(other: crate::models::FindReplaceCommand) -> Self {
+impl std::convert::From<crate::models::FindReplaceCommandRow> for FindReplaceCommand {
+    fn from(other: crate::models::FindReplaceCommandRow) -> Self {
         FindReplaceCommand {
             find: other.find,
             replace: other.replace,
             command: other.command,
+            shortcode: other.shortcode,
         }
     }
 }
@@ -58,7 +52,7 @@ impl Mutation {
             Some(phrase) => {
                 let conn = context.pool.get().unwrap();
                 let command = generate_command(&find, &replace);
-                let frc = crate::models::NewFindReplaceCommand {
+                let frc = crate::models::FindReplaceCommand {
                     find,
                     replace,
                     command,

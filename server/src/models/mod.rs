@@ -3,7 +3,8 @@ mod schema;
 use schema::find_replace_commands;
 
 #[derive(Queryable, Debug, Insertable)]
-pub struct FindReplaceCommand {
+#[table_name = "find_replace_commands"]
+pub struct FindReplaceCommandRow {
     pub id: i32,
     pub find: String,
     pub replace: String,
@@ -11,9 +12,9 @@ pub struct FindReplaceCommand {
     pub shortcode: String,
 }
 
-#[derive(Debug, Insertable)]
+#[derive(Debug, Insertable, juniper::GraphQLObject)]
 #[table_name = "find_replace_commands"]
-pub struct NewFindReplaceCommand {
+pub struct FindReplaceCommand {
     pub find: String,
     pub replace: String,
     pub command: String,
