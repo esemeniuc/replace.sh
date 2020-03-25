@@ -1,9 +1,9 @@
 import Page from "./components/Page";
 import ReactGA from 'react-ga';
-import React, {forwardRef, RefObject, useState} from "react";
+import React, {useState} from "react";
 import {gql, useMutation} from '@apollo/client';
 import {CreateComand} from "./__generated__/CreateComand";
-import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
+import {Box, Button, Paper, TextField, Tooltip, Typography} from "@material-ui/core";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {tomorrowNight} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {useClipboard} from "use-clipboard-copy";
@@ -23,10 +23,11 @@ function Codebox(props: { cmd: string }) {
         copiedTimeout: 1500 // duration in milliseconds
     });
     return <Tooltip title="Copied to clipboard!" open={clipboard.copied}>
-        <Box>{/* need to avoid refs*/}
+        <Box>{/* need this to avoid refs*/}
             <SyntaxHighlighter onClick={() => clipboard.copy(props.cmd)}
                                language="bash"
-                               style={tomorrowNight}>
+                               style={tomorrowNight}
+                               customStyle={{fontSize: "1.4rem", whiteSpace: "normal"}}>
                 {props.cmd}
             </SyntaxHighlighter>
         </Box>
@@ -94,9 +95,21 @@ export default function Home() {
 
         </form>
         {
-            ccData && <Box m={4}>
-                <Codebox cmd={cmd}/>
-            </Box>
+            // ccData && cmd && <Box m={4}>
+            <>
+
+                <Box mx={4} my={6}>
+                    <Typography variant="h4"
+                                component="h1"
+                                align="center">
+                        Command
+                    </Typography>
+                    <Paper elevation={5}>
+                        <Codebox cmd={cmd}/>
+                    </Paper>
+
+                </Box>
+            </>
         }
     </Page>;
 }
