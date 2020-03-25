@@ -46,6 +46,9 @@ export default function Home() {
                     variant="outlined"
                     autoFocus
                     fullWidth
+                    InputProps={{
+                        style: {fontFamily: "monospace"},
+                    }}
                 />
             </Box>
             <Box m={4}>
@@ -61,6 +64,9 @@ export default function Home() {
                     placeholder="Eg. bar123"
                     variant="outlined"
                     fullWidth
+                    InputProps={{
+                        style: {fontFamily: "monospace"},
+                    }}
                 />
             </Box>
             <Box display="flex" justifyContent="center">
