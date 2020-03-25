@@ -18,7 +18,7 @@ export default function App() {
     //     gaOptions: {siteSpeedSampleRate: 100}
     // });
 
-    return        <ApolloProvider client={client}>
-            <PageContainer/>
-        </ApolloProvider>;
+    return <ApolloProvider client={client}>
+        <PageContainer/>
+    </ApolloProvider>;
 }

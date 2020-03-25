@@ -12,6 +12,7 @@ export interface GetFindReplaceCommand_getFindReplaceCommand {
   find: string;
   replace: string;
   command: string;
+  shortcode: string;
 }
 
 export interface GetFindReplaceCommand {
