@@ -6,10 +6,11 @@ import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
 import {Box, Paper, Typography} from "@material-ui/core";
 import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
+import {useParams} from "react-router";
 
 const GET_FIND_REPLACE_COMMAND = gql`
-    query GetFindReplaceCommand{
-        getFindReplaceCommand(shortcode: "hideous-ground-0042"){
+    query GetFindReplaceCommand($shortcode: String!){
+        getFindReplaceCommand(shortcode: $shortcode){
             find
             replace
             command
@@ -19,13 +20,14 @@ const GET_FIND_REPLACE_COMMAND = gql`
 `;
 
 export default function View() {
-    ReactGA.pageview('/view');
+    const {shortcode} = useParams();
+    ReactGA.pageview('/r');
     const {
         loading: frcLoading,
         error: frcError,
         data: frcData,
         // refetch: frcRefetch
-    } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND);
+    } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND, {variables: {shortcode}});
     if (frcLoading) return <>Loading!</>; //TODO make loading and error pages
     if (frcError || !frcData) return <>Error!</>;
     return <Page>

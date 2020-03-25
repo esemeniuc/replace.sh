@@ -17,7 +17,7 @@ const CREATE_COMMAND = gql`
 `;
 
 export function formatCommandForDisplay(command: string | undefined, shortcode: string | undefined): string {
-    return `${command} #wtf is this? ${VIEW_FRC_ENDPOINT}/${shortcode}`.replace(/\n/g, "\\n");
+    return `${command?.replace(/\n/g, "\\n")} #wtf is this? ${VIEW_FRC_ENDPOINT}/${shortcode}`;
 }
 
 export default function Home() {

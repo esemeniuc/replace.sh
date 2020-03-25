@@ -15,4 +15,4 @@ export const HOMEPAGE = process.env.NODE_ENV === 'production' ? PageToDisplay.Ho
 
 export const BACKEND_ROOT_URL = process.env.NODE_ENV === 'production' ? "https://faxtail.com" : "http://localhost:8001";
 export const GRAPHQL_ENDPOINT = `${BACKEND_ROOT_URL}/graphql`;
-export const VIEW_FRC_ENDPOINT = `${BACKEND_ROOT_URL}/view`;
+export const VIEW_FRC_ENDPOINT = `${BACKEND_ROOT_URL}/r`;

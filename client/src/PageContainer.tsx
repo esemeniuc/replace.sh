@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, useRouteMatch} from "react-router-dom";
 import Home from "./Home";
 import View from "./View";
 
@@ -9,7 +9,7 @@ export function PageContainer() {
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Switch>
-                <Route path="/view">
+                <Route path={`/r/:shortcode`}>
                     <View/>
                 </Route>
                 <Route path="/">
