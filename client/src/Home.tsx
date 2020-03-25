@@ -36,7 +36,7 @@ function Codebox(props: { cmd: string }) {
 }
 
 function formatCommandForDisplay(ccData: CreateCommand | undefined) {
-    return `${ccData?.createCommand.command} #wtf is this? ${VIEW_FRC_ENDPOINT}/${ccData?.createCommand.shortcode}`;
+    return `${ccData?.createCommand.command} #wtf is this? ${VIEW_FRC_ENDPOINT}/${ccData?.createCommand.shortcode}`.replace(/\n/g, "\\n");
 }
 
 export default function Home() {
