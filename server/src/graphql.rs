@@ -36,7 +36,10 @@ impl Query {
 }
 
 fn generate_command(find: &String, replace: &String) -> String {
-    format!("sed 's/{}/{}/g'", find, replace) //todo: escape properly
+    //https://stackoverflow.com/questions/25569865/how-to-escape-curly-braces-in-a-format-string-in-rust
+    format!("sed '/./{{H;$!d}} ; x ; s/{}/{}/g' demo.txt", find, replace) //todo: escape properly
+    // sed '/./{H;$!d} ; x ; s/REGEXP/REPLACEMENT/'
+    // sed '/./{H;$!d} ; x ; s/findo1\n/replaco1/g' demo.txt
 }
 
 pub struct Mutation;
