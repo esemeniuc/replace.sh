@@ -37,9 +37,12 @@ impl Query {
 
 fn generate_command(find: &String, replace: &String) -> String {
     //https://stackoverflow.com/questions/25569865/how-to-escape-curly-braces-in-a-format-string-in-rust
-    format!("sed '/./{{H;$!d}} ; x ; s/{}/{}/g' demo.txt", find, replace) //todo: escape properly
-    // sed '/./{H;$!d} ; x ; s/REGEXP/REPLACEMENT/'
-    // sed '/./{H;$!d} ; x ; s/findo1\n/replaco1/g' demo.txt
+    let find = find.replace("/", "\\/");
+    let replace = replace.replace("/", "\\/");
+    format!("sed 'H;1h;$!d ; x ; s/{}/{}/g' demo.txt", find, replace) //todo: escape properly
+// sed -z 's/findo1\n/replaco1\n/' -i demo.txt
+// sed 'H;1h;$!d; x ; s/findo1\nfindo2\nfindo3\nfindo4/replaco1\nreplaco2\nreplaco3\nreplaceo4/g' demo.txt
+// https://unix.stackexchange.com/a/429141/402082
 }
 
 pub struct Mutation;
