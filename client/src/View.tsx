@@ -7,6 +7,7 @@ import {Box, Button, Paper, Typography} from "@material-ui/core";
 import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
 import {useParams} from "react-router";
+import {Link} from "react-router-dom";
 
 const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand($shortcode: String!){
@@ -59,10 +60,8 @@ export default function View() {
                 <Button size="large"
                         variant="contained"
                         color="primary"
-                        onClick={(e) => {
-                            e.preventDefault();
-
-                        }}>
+                        component={Link}
+                        to="/">
                     Make one like this!
                 </Button>
             </Box>
