@@ -31,18 +31,27 @@ export default function View() {
     if (frcLoading) return <>Loading!</>; //TODO make loading and error pages
     if (frcError || !frcData) return <>Error!</>;
     return <Page>
-        Command
         <Box mx={4} my={6}>
-            <Typography variant="h4"
-                        component="h1"
-                        align="center">
-                Command
+            <Typography variant="h4" component="h1">
+                The command ⤵
             </Typography>
             <Paper elevation={5}>
                 <Codebox
                     cmd={formatCommandForDisplay(frcData?.getFindReplaceCommand?.command, frcData?.getFindReplaceCommand?.shortcode)}/>
             </Paper>
 
+            <Typography variant="h4" component="h1">
+                ... finds this text ⤵
+            </Typography>
+            <Box fontFamily="Monospace" fontSize="h6.fontSize" m={1} style={{whiteSpace: "pre-wrap"}}>
+                {frcData?.getFindReplaceCommand?.find}
+            </Box>
+            <Typography variant="h4" component="h1">
+                and replaces it with ⤵
+            </Typography>
+            <Box fontFamily="Monospace" fontSize="h6.fontSize" m={1} style={{whiteSpace: "pre-wrap"}}>
+                {frcData?.getFindReplaceCommand?.replace}
+            </Box>
         </Box>
     </Page>;
 }

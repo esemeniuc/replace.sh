@@ -18,3 +18,7 @@ export interface GetFindReplaceCommand_getFindReplaceCommand {
 export interface GetFindReplaceCommand {
   getFindReplaceCommand: GetFindReplaceCommand_getFindReplaceCommand | null;
 }
+
+export interface GetFindReplaceCommandVariables {
+  shortcode: string;
+}
