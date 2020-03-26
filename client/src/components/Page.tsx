@@ -1,13 +1,13 @@
 import React from "react";
 import {AppBar, Box, Container, Link, Toolbar, Typography} from "@material-ui/core";
 import {BACKEND_ROOT_URL} from "../config";
-import {Print} from "@material-ui/icons";
+import {Search} from "@material-ui/icons";
 
 export default function Page(props: { children: React.ReactNode, style?: React.CSSProperties }) {
     return <>
         <AppBar position="relative" elevation={1}>
             <Toolbar>
-                <Print/><Box mr={1}/>
+                <Search/><Box mr={1}/>
                 <Link href={BACKEND_ROOT_URL} color="inherit">
                     <Typography variant="h6" color="inherit" noWrap>
                         replace.sh

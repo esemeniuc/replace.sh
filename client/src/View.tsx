@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import React from "react";
 import {gql, useQuery} from '@apollo/client';
 import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
-import {Box, Paper, Typography} from "@material-ui/core";
+import {Box, Button, Paper, Typography} from "@material-ui/core";
 import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
 import {useParams} from "react-router";
@@ -36,8 +36,9 @@ export default function View() {
                 The command ⤵
             </Typography>
             <Paper elevation={5}>
-                <Codebox
-                    cmd={formatCommandForDisplay(frcData?.getFindReplaceCommand?.command, frcData?.getFindReplaceCommand?.shortcode)}/>
+                <Codebox cmd={formatCommandForDisplay(
+                    frcData?.getFindReplaceCommand?.command,
+                    frcData?.getFindReplaceCommand?.shortcode)}/>
             </Paper>
 
             <Typography variant="h4" component="h1">
@@ -46,12 +47,25 @@ export default function View() {
             <Box fontFamily="Monospace" fontSize="h6.fontSize" m={1} style={{whiteSpace: "pre-wrap"}}>
                 {frcData?.getFindReplaceCommand?.find}
             </Box>
+
             <Typography variant="h4" component="h1">
                 and replaces it with ⤵
             </Typography>
             <Box fontFamily="Monospace" fontSize="h6.fontSize" m={1} style={{whiteSpace: "pre-wrap"}}>
                 {frcData?.getFindReplaceCommand?.replace}
             </Box>
+
+            <Box display="flex" justifyContent="center">
+                <Button variant="contained"
+                        color="primary"
+                        onClick={(e) => {
+                            e.preventDefault();
+
+                        }}>
+                    Make one like this!
+                </Button>
+            </Box>
+
         </Box>
     </Page>;
 }
