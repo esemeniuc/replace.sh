@@ -70,7 +70,8 @@ export default function Home() {
                 />
             </Box>
             <Box display="flex" justifyContent="center">
-                <Button variant="contained"
+                <Button size="large"
+                        variant="contained"
                         color="primary"
                         onClick={(e) => {
                             e.preventDefault();
