@@ -41,22 +41,23 @@ export default function View() {
                     frcData?.getFindReplaceCommand?.shortcode)}/>
             </Paper>
 
-            <Typography variant="h4" component="h1">
+            <Typography variant="h4" component="h1" gutterBottom>
                 ... finds this text ⤵
             </Typography>
-            <Box fontFamily="Monospace" fontSize="h6.fontSize" m={1} style={{whiteSpace: "pre-wrap"}}>
+            <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
                 {frcData?.getFindReplaceCommand?.find}
             </Box>
 
-            <Typography variant="h4" component="h1">
+            <Typography variant="h4" component="h1" gutterBottom>
                 and replaces it with ⤵
             </Typography>
-            <Box fontFamily="Monospace" fontSize="h6.fontSize" m={1} style={{whiteSpace: "pre-wrap"}}>
+            <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
                 {frcData?.getFindReplaceCommand?.replace}
             </Box>
 
             <Box display="flex" justifyContent="center">
-                <Button variant="contained"
+                <Button size="large"
+                        variant="contained"
                         color="primary"
                         onClick={(e) => {
                             e.preventDefault();
