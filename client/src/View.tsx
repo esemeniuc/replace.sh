@@ -36,11 +36,10 @@ export default function View() {
             <Typography variant="h4" component="h1">
                 The command ⤵
             </Typography>
-            <Paper elevation={5}>
-                <Codebox cmd={formatCommandForDisplay(
-                    frcData?.getFindReplaceCommand?.command,
-                    frcData?.getFindReplaceCommand?.shortcode)}/>
-            </Paper>
+            <Codebox cmd={formatCommandForDisplay(
+                frcData?.getFindReplaceCommand?.command,
+                frcData?.getFindReplaceCommand?.shortcode)}/>
+            <Box my={3}/>
 
             <Typography variant="h4" component="h1" gutterBottom>
                 ... finds this text ⤵
