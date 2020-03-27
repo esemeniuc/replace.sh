@@ -9,6 +9,8 @@ pub struct FindReplaceCommandRow {
     pub find: String,
     pub replace: String,
     pub command: String,
+    pub is_inplace: bool,
+    pub is_global: bool,
     pub shortcode: String,
 }
 
@@ -18,5 +20,7 @@ pub struct FindReplaceCommand {
     pub find: String,
     pub replace: String,
     pub command: String,
+    pub is_inplace: bool,
+    pub is_global: bool,
     pub shortcode: String,
 }
