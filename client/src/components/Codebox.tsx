@@ -1,5 +1,5 @@
 import {useClipboard} from "use-clipboard-copy";
-import {Box, Paper, Tooltip, Typography} from "@material-ui/core";
+import {Box, Link, Paper, Tooltip, Typography} from "@material-ui/core";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {tomorrowNight} from "react-syntax-highlighter/dist/esm/styles/hljs";
 import React from "react";
@@ -10,7 +10,7 @@ export function Codebox(props: { cmd: string }) {
         copiedTimeout: 1500 // duration in milliseconds
     });
     return <Tooltip title="Copied to clipboard!" open={clipboard.copied} arrow>
-        <Box>{/* need this to avoid refs*/}
+        <Box>{/* need this box to avoid dealing with refs using tooltip*/}
             <Paper elevation={5}>
                 <SyntaxHighlighter onClick={() => clipboard.copy(props.cmd)}
                                    language="bash"
@@ -26,7 +26,9 @@ export function Codebox(props: { cmd: string }) {
                 <Assignment color="primary"/>{' '}
                 <Typography variant="caption"
                             component="h2">
-                    <span style={{textDecoration: "underline"}}>Copy to clipboard</span>
+                    <Link onClick={() => clipboard.copy(props.cmd)}>
+                        Copy to clipboard
+                    </Link>
                 </Typography>
             </Box>
         </Box>
