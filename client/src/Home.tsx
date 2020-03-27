@@ -8,6 +8,7 @@ import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
 import {SyncLoader} from "react-spinners";
 import AsciinemaPlayer from "./components/AsciinemaPlayer";
+import {Assignment} from "@material-ui/icons";
 
 const CREATE_COMMAND = gql`
     mutation CreateCommand ($find: String!, $replace: String!) {
@@ -39,7 +40,7 @@ export default function Home() {
             <span
                 style={{
                     fontFamily: "monospace",
-                    backgroundColor: "#e9ff32",
+                    backgroundColor: "#e9ff32", //greenish
                     textDecoration: "underline"
                 }}>sed</span>
         </Tooltip>
@@ -118,13 +119,12 @@ export default function Home() {
                         <Box mx={4} my={6}>
                             <Typography variant="h4"
                                         component="h1"
-                                        align="center">
-                                Command
+                                        align="center"
+                                        gutterBottom>
+                                Your shiny command ⤵
                             </Typography>
-                            <Paper elevation={5}>
-                                <Codebox
-                                    cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
-                            </Paper>
+                            <Codebox
+                                cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
 
                         </Box>
                     </>
