@@ -20,4 +20,6 @@ export interface CreateCommand {
 export interface CreateCommandVariables {
   find: string;
   replace: string;
+  isGlobal: boolean;
+  isInplace: boolean;
 }

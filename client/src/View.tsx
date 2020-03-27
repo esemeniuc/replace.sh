@@ -15,6 +15,8 @@ const GET_FIND_REPLACE_COMMAND = gql`
             find
             replace
             command
+            isGlobal
+            isInplace
             shortcode
         }
     }

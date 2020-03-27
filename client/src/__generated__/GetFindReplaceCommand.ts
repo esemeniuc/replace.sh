@@ -12,6 +12,8 @@ export interface GetFindReplaceCommand_getFindReplaceCommand {
   find: string;
   replace: string;
   command: string;
+  isGlobal: boolean;
+  isInplace: boolean;
   shortcode: string;
 }
 

@@ -2,12 +2,19 @@ type FindReplaceCommand {
   find: String!
   replace: String!
   command: String!
+  isInplace: Boolean!
+  isGlobal: Boolean!
   shortcode: String!
 }
 
 type Mutation {
   # Returns a url for accessing the tuple
-  createCommand(find: String!, replace: String!): FindReplaceCommand!
+  createCommand(
+    find: String!
+    replace: String!
+    isGlobal: Boolean!
+    isInplace: Boolean!
+  ): FindReplaceCommand!
 }
 
 type Query {

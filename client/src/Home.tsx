@@ -11,8 +11,8 @@ import AsciinemaPlayer from "./components/AsciinemaPlayer";
 import {ShareBox} from "./components/Share";
 
 const CREATE_COMMAND = gql`
-    mutation CreateCommand ($find: String!, $replace: String!) {
-        createCommand(find: $find, replace: $replace){
+    mutation CreateCommand ($find: String!, $replace: String!, $isGlobal: Boolean!, $isInplace: Boolean!) {
+        createCommand(find: $find, replace: $replace, isGlobal: $isGlobal, isInplace: $isInplace){
             command
             shortcode
         }
