@@ -2,8 +2,8 @@ type FindReplaceCommand {
   find: String!
   replace: String!
   command: String!
-  isInplace: Boolean!
   isGlobal: Boolean!
+  isInplace: Boolean!
   shortcode: String!
 }
 
