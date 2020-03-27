@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import React, {useState} from "react";
 import {gql, useMutation} from '@apollo/client';
 import {CreateCommand} from "./__generated__/CreateCommand";
-import {Box, Button, Paper, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Paper, TextField, Tooltip, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
 import {SyncLoader} from "react-spinners";
@@ -29,14 +29,28 @@ export default function Home() {
     const [replace, setReplace] = useState("replaco1\nreplaco2\nreplaco3\nreplaco4");
     const [createCommand, {data: ccData, loading: ccLoading, error: ccError}] = useMutation<CreateCommand>(CREATE_COMMAND);
     return <Page>
+        <Box mt={4}/>
         <Typography variant="h4"
                     component="h1"
                     align="center">
-            Find and replace multiple lines of text from command line
+            Find and replace blocks of text with <Tooltip
+            title="sed is a stream editor that transforms text from an input stream (a file, or input from a pipeline). It's available on almost any platform (Ubuntu, Linux, Mac OS, WSL)"
+            arrow>
+            <span
+                style={{
+                    fontFamily: "monospace",
+                    backgroundColor: "#e9ff32",
+                    textDecoration: "underline"
+                }}>sed</span>
+        </Tooltip>
         </Typography>
 
-        <AsciinemaPlayer id="asciicast-WlEd6YNdZbJSYJ3x8dccc7GEE"
-                         src="https://asciinema.org/a/WlEd6YNdZbJSYJ3x8dccc7GEE.js"/>
+        <Box style={{width: "80%", margin: "auto"}}>
+            <AsciinemaPlayer id="Vk3jubMXrW4dVSvRfbmRwtALT"
+                             size='medium'
+                             speed={2.5}
+                             autoplay/>
+        </Box>
         <form>
             <Box m={4}>
                 <TextField
