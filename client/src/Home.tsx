@@ -3,12 +3,12 @@ import ReactGA from 'react-ga';
 import React, {useState} from "react";
 import {gql, useMutation} from '@apollo/client';
 import {CreateCommand} from "./__generated__/CreateCommand";
-import {Box, Button, Paper, TextField, Tooltip, Typography} from "@material-ui/core";
+import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
 import {SyncLoader} from "react-spinners";
 import AsciinemaPlayer from "./components/AsciinemaPlayer";
-import {Assignment} from "@material-ui/icons";
+import {ShareBox} from "./components/Share";
 
 const CREATE_COMMAND = gql`
     mutation CreateCommand ($find: String!, $replace: String!) {
@@ -19,8 +19,12 @@ const CREATE_COMMAND = gql`
     }
 `;
 
+function getUrlFromShortcode(shortcode: string | undefined) {
+    return `${VIEW_FRC_ENDPOINT}/${shortcode}`;
+}
+
 export function formatCommandForDisplay(command: string | undefined, shortcode: string | undefined): string {
-    return `${command?.replace(/\n/g, "\\n")} #cmd info: ${VIEW_FRC_ENDPOINT}/${shortcode}`;
+    return `${command?.replace(/\n/g, "\\n")} #cmd info: ${getUrlFromShortcode(shortcode)}`;
 }
 
 export default function Home() {
@@ -53,7 +57,7 @@ export default function Home() {
                              autoplay/>
         </Box>
         <form>
-            <Typography variant="h4" component="h1" align="center"  gutterBottom>
+            <Typography variant="h5" component="h2" align="center" gutterBottom>
                 Let's find this text ⤵
             </Typography>
             <Box m={4}>
@@ -76,7 +80,7 @@ export default function Home() {
                 />
             </Box>
 
-            <Typography variant="h4" component="h1" align="center" gutterBottom>
+            <Typography variant="h5" component="h2" align="center" gutterBottom>
                 ... and replace it with ⤵
             </Typography>
             <Box m={4}>
@@ -132,6 +136,11 @@ export default function Home() {
                             </Typography>
                             <Codebox
                                 cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
+
+                            <Box my={8}/>
+
+                            <ShareBox url={getUrlFromShortcode(ccData?.createCommand.shortcode)}
+                                      message={"Use replace.sh to find and replace blocks of text with sed."}/>
                         </Box>
                     </>
         }

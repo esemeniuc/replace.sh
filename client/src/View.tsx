@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import React from "react";
 import {gql, useQuery} from '@apollo/client';
 import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
-import {Box, Button, Paper, Typography} from "@material-ui/core";
+import {Box, Button, Typography} from "@material-ui/core";
 import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
 import {useParams} from "react-router";
@@ -41,14 +41,14 @@ export default function View() {
                 frcData?.getFindReplaceCommand?.shortcode)}/>
             <Box my={3}/>
 
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom>
                 ... finds this text ⤵
             </Typography>
             <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
                 {frcData?.getFindReplaceCommand?.find}
             </Box>
 
-            <Typography variant="h4" component="h1" gutterBottom>
+            <Typography variant="h5" component="h2" gutterBottom>
                 and replaces it with ⤵
             </Typography>
             <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
