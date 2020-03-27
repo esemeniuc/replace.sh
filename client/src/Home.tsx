@@ -53,6 +53,9 @@ export default function Home() {
                              autoplay/>
         </Box>
         <form>
+            <Typography variant="h4" component="h1" align="center"  gutterBottom>
+                Let's find this text ⤵
+            </Typography>
             <Box m={4}>
                 <TextField
                     value={find}
@@ -72,6 +75,10 @@ export default function Home() {
                     }}
                 />
             </Box>
+
+            <Typography variant="h4" component="h1" align="center" gutterBottom>
+                ... and replace it with ⤵
+            </Typography>
             <Box m={4}>
                 <TextField
                     value={replace}
@@ -103,7 +110,7 @@ export default function Home() {
                                 }
                             });
                         }}>
-                    Generate!
+                    Lets do it!
                 </Button>
             </Box>
 
@@ -125,7 +132,6 @@ export default function Home() {
                             </Typography>
                             <Codebox
                                 cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
-
                         </Box>
                     </>
         }
