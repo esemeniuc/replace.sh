@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 
-function DemoComp(props: { id: string }) {
-    return <div id={props.id}/>
-}
+// function DemoComp(props: { id: string }) {
+//     return <div id={props.id}/>
+// }
 
 export default function AsciinemaPlayer(props: {
     id: string,
@@ -35,7 +35,7 @@ export default function AsciinemaPlayer(props: {
         return () => {
             playerDiv && playerDiv.removeChild(script);
         }
-    }, [playerDivId, props.id]);
+    }, [playerDivId, props.id, props.autoplay, props.cols, props.rows, props.size, props.speed]);
 
     return playerContainerComponent
 }

@@ -49,7 +49,7 @@ export function ShareBox(props: { url: string, message: string }) {
                 <FacebookIcon/>
             </FacebookShareButton>
             <TwitterShareButton title={props.message}
-                                hashtags={["#replace.sh"]}
+                                hashtags={["replace.sh"]}
                                 via={BACKEND_ROOT_URL}
                                 url={props.url}>
                 <TwitterIcon/>
