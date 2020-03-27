@@ -7,8 +7,8 @@ impl std::convert::From<crate::models::FindReplaceCommandRow> for FindReplaceCom
             find: other.find,
             replace: other.replace,
             command: other.command,
-            is_inplace: other.is_inplace,
             is_global: other.is_global,
+            is_inplace: other.is_inplace,
             shortcode: other.shortcode,
         }
     }
@@ -42,14 +42,14 @@ fn generate_command(find: &String, replace: &String, is_global: &bool, is_inplac
     let find = find.replace("/", "\\/");
     let replace = replace.replace("/", "\\/");
 
-    let inplace_flag = if *is_inplace {
-        "-i "
+    let global_flag = if *is_global {
+        "g"
     } else {
         ""
     };
 
-    let global_flag = if *is_global {
-        "g"
+    let inplace_flag = if *is_inplace {
+        "-i "
     } else {
         ""
     };
