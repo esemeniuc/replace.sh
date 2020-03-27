@@ -35,7 +35,8 @@ export default function Home() {
             Find and replace multiple lines of text from command line
         </Typography>
 
-        <AsciinemaPlayer id="asciicast-WlEd6YNdZbJSYJ3x8dccc7GEE" src="https://asciinema.org/a/WlEd6YNdZbJSYJ3x8dccc7GEE.js" />
+        <AsciinemaPlayer id="asciicast-WlEd6YNdZbJSYJ3x8dccc7GEE"
+                         src="https://asciinema.org/a/WlEd6YNdZbJSYJ3x8dccc7GEE.js"/>
         <form>
             <Box m={4}>
                 <TextField
