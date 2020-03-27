@@ -6,6 +6,8 @@ import {CreateCommand} from "./__generated__/CreateCommand";
 import {Box, Button, Paper, TextField, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
+import {SyncLoader} from "react-spinners";
+import AsciinemaPlayer from "./components/AsciinemaPlayer";
 
 const CREATE_COMMAND = gql`
     mutation CreateCommand ($find: String!, $replace: String!) {
@@ -17,20 +19,23 @@ const CREATE_COMMAND = gql`
 `;
 
 export function formatCommandForDisplay(command: string | undefined, shortcode: string | undefined): string {
-    return `${command?.replace(/\n/g, "\\n")} #wtf is this? ${VIEW_FRC_ENDPOINT}/${shortcode}`;
+    return `${command?.replace(/\n/g, "\\n")} #cmd info: ${VIEW_FRC_ENDPOINT}/${shortcode}`;
 }
 
 export default function Home() {
     ReactGA.pageview('/home');
 
     const [find, setFind] = useState("findo1\nfindo2\nfindo3\nfindo4");
-    const [replace, setReplace] = useState("replaco1\nreplaco2\nreplaco3\nreplaco4\n");
-
+    const [replace, setReplace] = useState("replaco1\nreplaco2\nreplaco3\nreplaco4");
     const [createCommand, {data: ccData, loading: ccLoading, error: ccError}] = useMutation<CreateCommand>(CREATE_COMMAND);
-    if (ccLoading) return <>Loading!</>; //TODO make loading and error pages
-    if (ccError) return <>Error!</>;
     return <Page>
-        Find and replace multiple lines of text from command line
+        <Typography variant="h4"
+                    component="h1"
+                    align="center">
+            Find and replace multiple lines of text from command line
+        </Typography>
+
+        <AsciinemaPlayer id="asciicast-WlEd6YNdZbJSYJ3x8dccc7GEE" src="https://asciinema.org/a/WlEd6YNdZbJSYJ3x8dccc7GEE.js" />
         <form>
             <Box m={4}>
                 <TextField
@@ -88,22 +93,26 @@ export default function Home() {
 
         </form>
         {
-            // ccData && cmd && <Box m={4}>
-            <>
+            ccLoading ? <Box display="flex" justifyContent="center" my={6}>
+                    <SyncLoader size={24} color="#3f51b5"/>
+                </Box> :
+                ccError ? <>Error!</> :  //TODO make error pages
+                    // ccData && cmd && <Box m={4}>
+                    <>
 
-                <Box mx={4} my={6}>
-                    <Typography variant="h4"
-                                component="h1"
-                                align="center">
-                        Command
-                    </Typography>
-                    <Paper elevation={5}>
-                        <Codebox
-                            cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
-                    </Paper>
+                        <Box mx={4} my={6}>
+                            <Typography variant="h4"
+                                        component="h1"
+                                        align="center">
+                                Command
+                            </Typography>
+                            <Paper elevation={5}>
+                                <Codebox
+                                    cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
+                            </Paper>
 
-                </Box>
-            </>
+                        </Box>
+                    </>
         }
     </Page>;
 }

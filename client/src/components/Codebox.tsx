@@ -8,7 +8,6 @@ export function Codebox(props: { cmd: string }) {
     const clipboard = useClipboard({
         copiedTimeout: 1500 // duration in milliseconds
     });
-    console.log(props.cmd);
     return <Tooltip title="Copied to clipboard!" open={clipboard.copied}>
         <Box>{/* need this to avoid refs*/}
             <SyntaxHighlighter onClick={() => clipboard.copy(props.cmd)}
