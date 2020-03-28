@@ -104,7 +104,10 @@ export default function Home() {
                 />
             </Box>
 
-            <Box mx={30}>
+            <Typography variant="h5" component="h2" align="center" gutterBottom>
+                Optional customizations ⤵
+            </Typography>
+            <Box my={4} mx={30}>
                 <Grid component="label" container alignItems="center" justify="center" spacing={1}
                       style={{flexWrap: "nowrap"}}>
                     <Grid item xs={5} style={{textAlign: "center"}}>
@@ -128,18 +131,18 @@ export default function Home() {
                       style={{flexWrap: "nowrap"}}>
                     <Grid item xs={5} style={{textAlign: "center"}}>
                         <Tooltip arrow
-                                 title="Modifies 'INPUT_FILE.txt' in-place">
-                            <Typography variant="body1">Modify in-place</Typography>
-                        </Tooltip></Grid>
+                                 title="Creates a new file called 'OUTPUT_FILE.txt'. Does not modify 'INPUT_FILE.txt'">
+                            <Typography variant="body1">Make new file</Typography>
+                        </Tooltip>
+                    </Grid>
                     <Grid item xs={2} style={{textAlign: "center"}}>
                         <Switch checked={isInplace} onChange={() => setIsInplace(!isInplace)}/>
                     </Grid>
                     <Grid item xs={5} style={{textAlign: "center"}}>
                         <Tooltip arrow
-                                 title="Creates a new file called 'OUTPUT_FILE.txt'. Does not modify 'INPUT_FILE.txt'">
-                            <Typography variant="body1">Make new file</Typography>
-                        </Tooltip>
-                    </Grid>
+                                 title="Modifies 'INPUT_FILE.txt' in-place">
+                            <Typography variant="body1">Modify in-place</Typography>
+                        </Tooltip></Grid>
                 </Grid>
             </Box>
 
