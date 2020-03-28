@@ -2,17 +2,19 @@
 #[macro_use]
 extern crate diesel;
 #[macro_use]
-extern crate juniper;
-#[macro_use]
 extern crate diesel_migrations;
+#[macro_use]
+extern crate juniper;
+
 
 use rocket::{response::content, State, http::Method};
+use rocket_contrib::serve::StaticFiles;
 
 mod graphql;
 mod db;
 mod models;
 
-#[rocket::get("/")]
+#[rocket::get("/graphiql")]
 fn graphiql() -> content::Html<String> {
     juniper_rocket::playground_source("/graphql")
 }
@@ -47,6 +49,7 @@ fn main() {
         .manage(graphql::create_schema())
         .manage(context)
         .attach(cors)
+        .mount("/", StaticFiles::from("../client/build"))
         .mount(
             "/",
             rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],
