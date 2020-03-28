@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import React, {useState} from "react";
 import {gql, useMutation} from '@apollo/client';
 import {CreateCommand} from "./__generated__/CreateCommand";
-import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
+import {Box, Button, Grid, Switch, TextField, Tooltip, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
 import {SyncLoader} from "react-spinners";
@@ -32,6 +32,8 @@ export default function Home() {
 
     const [find, setFind] = useState("findo1\nfindo2\nfindo3\nfindo4");
     const [replace, setReplace] = useState("replaco1\nreplaco2\nreplaco3\nreplaco4");
+    const [isGlobal, setIsGlobal] = useState(true);
+    const [isInplace, setIsInplace] = useState(false);
     const [createCommand, {data: ccData, loading: ccLoading, error: ccError}] = useMutation<CreateCommand>(CREATE_COMMAND);
     return <Page>
         <Box mt={4}/>
@@ -101,6 +103,29 @@ export default function Home() {
                     }}
                 />
             </Box>
+
+            <Box mx={30}>
+                <Grid component="label" container alignItems="center" justify="center" spacing={1}
+                      style={{flexWrap: "nowrap"}}>
+                    <Grid item style={{flex: 2, textAlign: "center"}}>Replace first</Grid>
+                    <Grid item style={{flex: 1, textAlign: "center"}}>
+                        <Switch checked={isGlobal} onChange={() => setIsGlobal(!isGlobal)}/>
+                    </Grid>
+                    <Grid item style={{flex: 2, textAlign: "center"}}>Replace all</Grid>
+                </Grid>
+
+                <Grid component="label" container alignItems="center" justify="center" spacing={1}
+                      style={{flexWrap: "nowrap"}}>
+                    <Grid item style={{flex: 2, textAlign: "center"}}>In-place</Grid>
+                    <Grid item style={{flex: 1, textAlign: "center"}}>
+                        <Switch checked={isInplace} onChange={() => setIsInplace(!isInplace)}/>
+                    </Grid>
+                    <Grid item style={{flex: 2, textAlign: "center"}}>Make new file</Grid>
+                </Grid>
+            </Box>
+
+            <Box my={4}/>
+
             <Box display="flex" justifyContent="center">
                 <Button size="large"
                         variant="contained"
@@ -110,7 +135,9 @@ export default function Home() {
                             createCommand({
                                 variables: {
                                     find,
-                                    replace
+                                    replace,
+                                    isGlobal,
+                                    isInplace,
                                 }
                             });
                         }}>
