@@ -48,13 +48,12 @@ fn generate_command(find: &String, replace: &String, is_global: &bool, is_inplac
         ""
     };
 
-    let inplace_flag = if *is_inplace {
-        "-i "
+    return if *is_inplace {
+        format!("sed -i 'H;1h;$!d ; x ; s/{}/{}/{}' INPUT_FILE.txt", find, replace, global_flag)
     } else {
-        ""
+        format!("sed 'H;1h;$!d ; x ; s/{}/{}/{}' INPUT_FILE.txt > OUTPUT_FILE.txt", find, replace, global_flag)
     };
 
-    format!("sed {}'H;1h;$!d ; x ; s/{}/{}/{}' demo.txt", inplace_flag, find, replace, global_flag)
 // sed -z 's/findo1\n/replaco1\n/' -i demo.txt
 // sed 'H;1h;$!d; x ; s/findo1\nfindo2\nfindo3\nfindo4/replaco1\nreplaco2\nreplaco3\nreplaceo4/g' demo.txt
 // https://unix.stackexchange.com/a/429141/402082
