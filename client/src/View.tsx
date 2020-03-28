@@ -8,7 +8,6 @@ import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
 import {useParams} from "react-router";
 import {Link} from "react-router-dom";
-import {FindReplaceOptionsSelector} from "./components/FindReplaceOptionsSelector";
 
 const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand($shortcode: String!){
@@ -46,22 +45,27 @@ export default function View() {
             <Box my={3}/>
 
             <Typography variant="h5" component="h2" gutterBottom>
-                ... finds this text ⤵
+                ... finds <span style={{
+                backgroundColor: "#e9ff32", //greenish
+                textDecoration: "underline"
+            }}>{frcData.getFindReplaceCommand.isGlobal ? "all occurrences" : "the first occurrence"}</span> of this
+                text ⤵
             </Typography>
             <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
                 {frcData.getFindReplaceCommand.find}
             </Box>
 
             <Typography variant="h5" component="h2" gutterBottom>
-                and replaces it with ⤵
+                and replaces it <span style={{
+                backgroundColor: "#e9ff32", //greenish
+                textDecoration: "underline"
+            }}>{frcData.getFindReplaceCommand.isInplace ? "in-place" : "in a new file"}</span> with this
+                text ⤵
             </Typography>
+
             <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
                 {frcData.getFindReplaceCommand.replace}
             </Box>
-
-            <FindReplaceOptionsSelector isGlobal={frcData.getFindReplaceCommand.isGlobal}
-                                        isInplace={frcData.getFindReplaceCommand.isInplace}
-                                        disableInput={true}/>
 
             <Box display="flex" justifyContent="center">
                 <Button size="large"

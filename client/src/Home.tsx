@@ -44,12 +44,11 @@ export default function Home() {
             Find and replace blocks of text with <Tooltip
             title="sed is a stream editor that transforms text from an input stream (a file, or input from a pipeline). It's available on almost any platform (Ubuntu, Linux, Mac OS, WSL)"
             arrow>
-            <span
-                style={{
-                    fontFamily: "monospace",
-                    backgroundColor: "#e9ff32", //greenish
-                    textDecoration: "underline"
-                }}>sed</span>
+            <span style={{
+                fontFamily: "monospace",
+                backgroundColor: "#e9ff32", //greenish
+                textDecoration: "underline"
+            }}>sed</span>
         </Tooltip>
         </Typography>
 
