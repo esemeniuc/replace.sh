@@ -8,6 +8,7 @@ import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
 import {useParams} from "react-router";
 import {Link} from "react-router-dom";
+import {LoadingSpinner} from "./components/LoadingSpinner";
 
 const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand($shortcode: String!){
@@ -31,8 +32,8 @@ export default function View() {
         data: frcData,
         // refetch: frcRefetch
     } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND, {variables: {shortcode}});
-    if (frcLoading) return <>Loading!</>; //TODO make loading and error pages
-    if (frcError || !frcData) return <>Error!</>;
+    if (frcLoading) return <LoadingSpinner/>;
+    if (frcError || !frcData) return <>Error!</>;//TODO make error pages
     if (!frcData.getFindReplaceCommand) return <>404, sorry not found :(</>;
     return <Page>
         <Box mx={4} my={6}>

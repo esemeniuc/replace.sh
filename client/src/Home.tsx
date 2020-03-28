@@ -6,10 +6,10 @@ import {CreateCommand} from "./__generated__/CreateCommand";
 import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
-import {SyncLoader} from "react-spinners";
 import AsciinemaPlayer from "./components/AsciinemaPlayer";
 import {ShareBox} from "./components/Share";
 import {FindReplaceOptionsSelector} from "./components/FindReplaceOptionsSelector";
+import {LoadingSpinner} from "./components/LoadingSpinner";
 
 const CREATE_COMMAND = gql`
     mutation CreateCommand ($find: String!, $replace: String!, $isGlobal: Boolean!, $isInplace: Boolean!) {
@@ -138,29 +138,24 @@ export default function Home() {
 
         </form>
         {
-            ccLoading ? <Box display="flex" justifyContent="center" my={6}>
-                    <SyncLoader size={24} color="#3f51b5"/>
-                </Box> :
+            ccLoading ? <LoadingSpinner/> :
                 ccError ? <>Error!</> :  //TODO make error pages
                     // ccData && cmd && <Box m={4}>
-                    <>
+                    <Box mx={4} my={6}>
+                        <Typography variant="h4"
+                                    component="h1"
+                                    align="center"
+                                    gutterBottom>
+                            Your shiny command ⤵
+                        </Typography>
+                        <Codebox
+                            cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
 
-                        <Box mx={4} my={6}>
-                            <Typography variant="h4"
-                                        component="h1"
-                                        align="center"
-                                        gutterBottom>
-                                Your shiny command ⤵
-                            </Typography>
-                            <Codebox
-                                cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
+                        <Box my={8}/>
 
-                            <Box my={8}/>
-
-                            <ShareBox url={getUrlFromShortcode(ccData?.createCommand.shortcode)}
-                                      message={"Use replace.sh to find and replace blocks of text with sed."}/>
-                        </Box>
-                    </>
+                        <ShareBox url={getUrlFromShortcode(ccData?.createCommand.shortcode)}
+                                  message={"Use replace.sh to find and replace blocks of text with sed."}/>
+                    </Box>
         }
     </Page>;
 }
