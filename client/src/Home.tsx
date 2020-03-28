@@ -3,12 +3,13 @@ import ReactGA from 'react-ga';
 import React, {useState} from "react";
 import {gql, useMutation} from '@apollo/client';
 import {CreateCommand} from "./__generated__/CreateCommand";
-import {Box, Button, Grid, Switch, TextField, Tooltip, Typography} from "@material-ui/core";
+import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
 import {SyncLoader} from "react-spinners";
 import AsciinemaPlayer from "./components/AsciinemaPlayer";
 import {ShareBox} from "./components/Share";
+import {FindReplaceOptionsSelector} from "./components/FindReplaceOptionsSelector";
 
 const CREATE_COMMAND = gql`
     mutation CreateCommand ($find: String!, $replace: String!, $isGlobal: Boolean!, $isInplace: Boolean!) {
@@ -108,42 +109,11 @@ export default function Home() {
                 Optional customizations ⤵
             </Typography>
             <Box my={4} mx={30}>
-                <Grid component="label" container alignItems="center" justify="center" spacing={1}
-                      style={{flexWrap: "nowrap"}}>
-                    <Grid item xs={5} style={{textAlign: "center"}}>
-                        <Tooltip arrow
-                                 title="Replaces only the first time text appears, and ignores all other matches">
-                            <Typography variant="body1">Replace first</Typography>
-                        </Tooltip>
-                    </Grid>
-                    <Grid item xs={2} style={{textAlign: "center"}}>
-                        <Switch checked={isGlobal} onChange={() => setIsGlobal(!isGlobal)}/>
-                    </Grid>
-                    <Grid item xs={5} style={{textAlign: "center"}}>
-                        <Tooltip arrow
-                                 title="Replaces all occurrences of the text being searched for">
-                            <Typography variant="body1">Replace all</Typography>
-                        </Tooltip>
-                    </Grid>
-                </Grid>
-
-                <Grid component="label" container alignItems="center" justify="center" spacing={1}
-                      style={{flexWrap: "nowrap"}}>
-                    <Grid item xs={5} style={{textAlign: "center"}}>
-                        <Tooltip arrow
-                                 title="Creates a new file called 'OUTPUT_FILE.txt'. Does not modify 'INPUT_FILE.txt'">
-                            <Typography variant="body1">Make new file</Typography>
-                        </Tooltip>
-                    </Grid>
-                    <Grid item xs={2} style={{textAlign: "center"}}>
-                        <Switch checked={isInplace} onChange={() => setIsInplace(!isInplace)}/>
-                    </Grid>
-                    <Grid item xs={5} style={{textAlign: "center"}}>
-                        <Tooltip arrow
-                                 title="Modifies 'INPUT_FILE.txt' in-place">
-                            <Typography variant="body1">Modify in-place</Typography>
-                        </Tooltip></Grid>
-                </Grid>
+                <FindReplaceOptionsSelector isGlobal={isGlobal}
+                                            setIsGlobal={setIsGlobal}
+                                            isInplace={isInplace}
+                                            setIsInplace={setIsInplace}
+                                            disableInput={false}/>
             </Box>
 
             <Box my={4}/>

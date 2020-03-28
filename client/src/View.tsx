@@ -8,6 +8,7 @@ import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay} from "./Home";
 import {useParams} from "react-router";
 import {Link} from "react-router-dom";
+import {FindReplaceOptionsSelector} from "./components/FindReplaceOptionsSelector";
 
 const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand($shortcode: String!){
@@ -33,29 +34,34 @@ export default function View() {
     } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND, {variables: {shortcode}});
     if (frcLoading) return <>Loading!</>; //TODO make loading and error pages
     if (frcError || !frcData) return <>Error!</>;
+    if (!frcData.getFindReplaceCommand) return <>404, sorry not found :(</>;
     return <Page>
         <Box mx={4} my={6}>
             <Typography variant="h4" component="h1">
                 The command ⤵
             </Typography>
             <Codebox cmd={formatCommandForDisplay(
-                frcData?.getFindReplaceCommand?.command,
-                frcData?.getFindReplaceCommand?.shortcode)}/>
+                frcData.getFindReplaceCommand.command,
+                frcData.getFindReplaceCommand.shortcode)}/>
             <Box my={3}/>
 
             <Typography variant="h5" component="h2" gutterBottom>
                 ... finds this text ⤵
             </Typography>
             <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
-                {frcData?.getFindReplaceCommand?.find}
+                {frcData.getFindReplaceCommand.find}
             </Box>
 
             <Typography variant="h5" component="h2" gutterBottom>
                 and replaces it with ⤵
             </Typography>
             <Box fontFamily="Monospace" fontSize="body1.fontSize" mx={1} my={3} style={{whiteSpace: "pre-wrap"}}>
-                {frcData?.getFindReplaceCommand?.replace}
+                {frcData.getFindReplaceCommand.replace}
             </Box>
+
+            <FindReplaceOptionsSelector isGlobal={frcData.getFindReplaceCommand.isGlobal}
+                                        isInplace={frcData.getFindReplaceCommand.isInplace}
+                                        disableInput={true}/>
 
             <Box display="flex" justifyContent="center">
                 <Button size="large"
