@@ -20,7 +20,7 @@ const CREATE_COMMAND = gql`
     }
 `;
 
-function getUrlFromShortcode(shortcode: string | undefined) {
+export function getUrlFromShortcode(shortcode: string | undefined) {
     return `${VIEW_FRC_ENDPOINT}/${shortcode}`;
 }
 
@@ -139,7 +139,7 @@ export default function Home() {
         </form>
         {
             ccLoading ? <LoadingSpinner/> :
-                ccError ? <>Error!</> :  //TODO make error pages
+                ccError || !ccData ? <>Error!</> :  //TODO make error pages
                     // ccData && cmd && <Box m={4}>
                     <Box mx={4} my={6}>
                         <Typography variant="h4"
@@ -149,11 +149,11 @@ export default function Home() {
                             Your shiny command ⤵
                         </Typography>
                         <Codebox
-                            cmd={formatCommandForDisplay(ccData?.createCommand.command, ccData?.createCommand.shortcode)}/>
+                            cmd={formatCommandForDisplay(ccData.createCommand.command, ccData.createCommand.shortcode)}/>
 
                         <Box my={8}/>
 
-                        <ShareBox url={getUrlFromShortcode(ccData?.createCommand.shortcode)}
+                        <ShareBox url={getUrlFromShortcode(ccData.createCommand.shortcode)}
                                   message={"Use replace.sh to find and replace blocks of text with sed."}/>
                     </Box>
         }

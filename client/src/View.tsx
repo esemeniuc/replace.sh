@@ -5,10 +5,11 @@ import {gql, useQuery} from '@apollo/client';
 import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
 import {Box, Button, Typography} from "@material-ui/core";
 import {Codebox} from "./components/Codebox";
-import {formatCommandForDisplay} from "./Home";
+import {formatCommandForDisplay, getUrlFromShortcode} from "./Home";
 import {useParams} from "react-router";
 import {Link} from "react-router-dom";
 import {LoadingSpinner} from "./components/LoadingSpinner";
+import {ShareBox} from "./components/Share";
 
 const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand($shortcode: String!){
@@ -68,16 +69,20 @@ export default function View() {
                 {frcData.getFindReplaceCommand.replace}
             </Box>
 
+            <Box my={2}/>
+
             <Box display="flex" justifyContent="center">
                 <Button size="large"
                         variant="contained"
                         color="primary"
                         component={Link}
                         to="/">
-                    Make one like this!
+                    Make another!
                 </Button>
             </Box>
-
+            <Box my={5}/>
+            <ShareBox url={getUrlFromShortcode(frcData.getFindReplaceCommand.shortcode)}
+                      message={"Use replace.sh to find and replace blocks of text with sed."}/>
         </Box>
     </Page>;
 }
