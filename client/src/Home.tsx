@@ -10,6 +10,7 @@ import AsciinemaPlayer from "./components/AsciinemaPlayer";
 import {ShareBox} from "./components/Share";
 import {FindReplaceOptionsSelector} from "./components/FindReplaceOptionsSelector";
 import {LoadingSpinner} from "./components/LoadingSpinner";
+import {ErrorComponent} from "./components/ErrorComponent";
 
 const CREATE_COMMAND = gql`
     mutation CreateCommand ($find: String!, $replace: String!, $isGlobal: Boolean!, $isInplace: Boolean!) {
@@ -139,9 +140,8 @@ export default function Home() {
         </form>
         {
             ccLoading ? <LoadingSpinner/> :
-                ccError || !ccData ? <>Error!</> :  //TODO make error pages
-                    // ccData && cmd && <Box m={4}>
-                    <Box mx={4} my={6}>
+                ccError ? <ErrorComponent/> :
+                    ccData && <Box mx={4} my={6}>
                         <Typography variant="h4"
                                     component="h1"
                                     align="center"

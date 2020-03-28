@@ -10,6 +10,7 @@ import {useParams} from "react-router";
 import {Link} from "react-router-dom";
 import {LoadingSpinner} from "./components/LoadingSpinner";
 import {ShareBox} from "./components/Share";
+import {ErrorComponent} from "./components/ErrorComponent";
 
 const GET_FIND_REPLACE_COMMAND = gql`
     query GetFindReplaceCommand($shortcode: String!){
@@ -34,7 +35,7 @@ export default function View() {
         // refetch: frcRefetch
     } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND, {variables: {shortcode}});
     if (frcLoading) return <LoadingSpinner/>;
-    if (frcError || !frcData) return <>Error!</>;//TODO make error pages
+    if (frcError || !frcData) return <ErrorComponent/>;
     if (!frcData.getFindReplaceCommand) return <>404, sorry not found :(</>;
     return <Page>
         <Box mx={4} my={6}>
@@ -58,7 +59,7 @@ export default function View() {
             </Box>
 
             <Typography variant="h5" component="h2" gutterBottom>
-                and replaces it <span style={{
+                ... and replaces it <span style={{
                 backgroundColor: "#e9ff32", //greenish
                 textDecoration: "underline"
             }}>{frcData.getFindReplaceCommand.isInplace ? "in-place" : "in a new file"}</span> with this
