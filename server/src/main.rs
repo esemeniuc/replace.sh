@@ -5,14 +5,51 @@ extern crate diesel;
 extern crate diesel_migrations;
 #[macro_use]
 extern crate juniper;
-
-
-use rocket::{response::content, State, http::Method};
-use rocket_contrib::serve::StaticFiles;
+#[macro_use]
+extern crate rocket;
 
 mod graphql;
 mod db;
 mod models;
+
+use rocket::{response::content, State};
+use rocket::http::{Status, Method, ContentType};
+use rocket::response;
+use rust_embed::RustEmbed;
+
+use std::ffi::OsStr;
+use std::io::Cursor;
+use std::path::PathBuf;
+
+//from https://github.com/pyros2097/rust-embed/blob/master/examples/rocket.rs
+#[derive(RustEmbed)]
+#[folder = "../client/build"]
+struct Asset;
+
+#[get("/")]
+fn index<'r>() -> response::Result<'r> {
+    Asset::get("index.html").map_or_else(
+        || Err(Status::NotFound),
+        |d| response::Response::build().header(ContentType::HTML).sized_body(Cursor::new(d)).ok(),
+    )
+}
+
+#[get("/<file..>")]
+fn dist<'r>(file: PathBuf) -> response::Result<'r> {
+    let filename = file.display().to_string();
+    Asset::get(&filename).map_or_else(
+        || index(), //redirect to homepage for react
+        |d| {
+            let ext = file
+                .as_path()
+                .extension()
+                .and_then(OsStr::to_str)
+                .ok_or_else(|| Status::new(400, "Could not get file extension"))?;
+            let content_type = ContentType::from_extension(ext).ok_or_else(|| Status::new(400, "Could not get file content type"))?;
+            response::Response::build().header(content_type).sized_body(Cursor::new(d)).ok()
+        },
+    )
+}
 
 #[rocket::get("/graphiql")]
 fn graphiql() -> content::Html<String> {
@@ -49,10 +86,9 @@ fn main() {
         .manage(graphql::create_schema())
         .manage(context)
         .attach(cors)
-        .mount("/", StaticFiles::from("../client/build"))
         .mount(
             "/",
-            rocket::routes![graphiql, get_graphql_handler, post_graphql_handler],
+            rocket::routes![index, dist, graphiql, get_graphql_handler, post_graphql_handler],
         )
         .launch();
 }

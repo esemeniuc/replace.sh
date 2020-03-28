@@ -14,6 +14,7 @@ impl std::convert::From<crate::models::FindReplaceCommandRow> for FindReplaceCom
     }
 }
 
+//file based on https://github.com/actix/examples/tree/master/juniper
 pub struct Context {
     pub pool: crate::db::DbPool,
 }
