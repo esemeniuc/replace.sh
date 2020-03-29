@@ -41,22 +41,22 @@ export function ShareBox(props: { url: string, message: string }) {
             <EmailShareButton subject={props.message} //TODO: use short names in subject instead
                               body={props.message}
                               url={props.url}>
-                <EmailIcon/>
+                <EmailIcon size={32} round={true}/>
             </EmailShareButton>
             <FacebookShareButton quote={props.message}
                                  hashtag={"#replace.sh"}
                                  url={props.url}>
-                <FacebookIcon/>
+                <FacebookIcon size={32} round={true}/>
             </FacebookShareButton>
             <TwitterShareButton title={props.message}
                                 hashtags={["replace.sh"]}
                                 via={BACKEND_ROOT_URL}
                                 url={props.url}>
-                <TwitterIcon/>
+                <TwitterIcon size={32} round={true}/>
             </TwitterShareButton>
             <WhatsappShareButton title={props.message}
                                  url={props.url}>
-                <WhatsappIcon/>
+                <WhatsappIcon size={32} round={true}/>
             </WhatsappShareButton>
         </Box>
     </Box>
