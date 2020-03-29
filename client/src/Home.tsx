@@ -53,8 +53,8 @@ export default function Home() {
         </Tooltip>
         </Typography>
 
-        <Box style={{width: "80%", margin: "auto"}}>
-            <AsciinemaPlayer id="Vk3jubMXrW4dVSvRfbmRwtALT"
+        <Box style={{textAlign: "center"}}>
+            <AsciinemaPlayer id="y5K6D81FL6J4z71jzcqxBd4R7"
                              size='medium'
                              speed={2.5}
                              autoplay/>
