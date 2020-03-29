@@ -40,8 +40,8 @@ impl Query {
 
 fn generate_command(find: &String, replace: &String, is_global: &bool, is_inplace: &bool) -> String {
     //https://stackoverflow.com/questions/25569865/how-to-escape-curly-braces-in-a-format-string-in-rust
-    let find = find.replace("/", "\\/");
-    let replace = replace.replace("/", "\\/");
+    let find = find.replace("/", "\\/").replace("\n", "\\n");
+    let replace = replace.replace("/", "\\/").replace("\n", "\\\n"); //escape slashes since sed uses them, then escape newlines
 
     let global_flag = if *is_global {
         "g"
@@ -55,8 +55,9 @@ fn generate_command(find: &String, replace: &String, is_global: &bool, is_inplac
         format!("sed 'H;1h;$!d ; x ; s/{}/{}/{}' INPUT_FILE.txt > OUTPUT_FILE.txt", find, replace, global_flag)
     };
 
-// sed -z 's/findo1\n/replaco1\n/' -i demo.txt
-// sed 'H;1h;$!d; x ; s/findo1\nfindo2\nfindo3\nfindo4/replaco1\nreplaco2\nreplaco3\nreplaceo4/g' demo.txt
+// sed -z 's/findo1\n/replaco1\n/' -i INPUT_FILE.txt #not portable
+// sed 'H;1h;$!d; x ; s/findo1\nfindo2\nfindo3\nfindo4/replaco1\nreplaco2\nreplaco3\nreplaceo4/g' INPUT_FILE.txt
+// sed "H;1h;\$\!d; x ; s/findo1\nfindo2\nfindo3\nfindo4/replaco1\nreplaco2\nreplaco3\nreplaceo4/g" INPUT_FILE.txt
 // https://unix.stackexchange.com/a/429141/402082
 }
 

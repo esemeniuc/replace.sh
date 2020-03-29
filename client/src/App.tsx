@@ -12,7 +12,7 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-    ReactGA.initialize('UA-161926610-1', {
+    ReactGA.initialize('UA-161926610-2', {
         debug: process.env.NODE_ENV !== 'production',
         titleCase: false,
         gaOptions: {siteSpeedSampleRate: 100}

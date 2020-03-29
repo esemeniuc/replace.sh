@@ -26,7 +26,7 @@ export function getUrlFromShortcode(shortcode: string | undefined) {
 }
 
 export function formatCommandForDisplay(command: string | undefined, shortcode: string | undefined): string {
-    return `${command?.replace(/\n/g, "\\n")} #cmd info: ${getUrlFromShortcode(shortcode)}`;
+    return `${command} #cmd info: ${getUrlFromShortcode(shortcode)}`;
 }
 
 export default function Home() {
