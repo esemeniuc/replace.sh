@@ -2,7 +2,7 @@ import React from "react";
 import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/client';
 import {PageContainer} from "./PageContainer";
 import {GRAPHQL_ENDPOINT} from "./config";
-// import ReactGA from 'react-ga';
+import ReactGA from 'react-ga';
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
@@ -12,11 +12,11 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-    // ReactGA.initialize('UA-157507250-1', {
-    //     debug: process.env.NODE_ENV !== 'production',
-    //     titleCase: false,
-    //     gaOptions: {siteSpeedSampleRate: 100}
-    // });
+    ReactGA.initialize('UA-161926610-1', {
+        debug: process.env.NODE_ENV !== 'production',
+        titleCase: false,
+        gaOptions: {siteSpeedSampleRate: 100}
+    });
 
     return <ApolloProvider client={client}>
         <PageContainer/>

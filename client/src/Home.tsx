@@ -30,7 +30,7 @@ export function formatCommandForDisplay(command: string | undefined, shortcode: 
 }
 
 export default function Home() {
-    ReactGA.pageview('/home');
+    ReactGA.pageview('/');
 
     const [find, setFind] = useState("findo1\nfindo2\nfindo3\nfindo4");
     const [replace, setReplace] = useState("replaco1\nreplaco2\nreplaco3\nreplaco4");

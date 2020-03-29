@@ -6,7 +6,7 @@ import {GetFindReplaceCommand} from "./__generated__/GetFindReplaceCommand";
 import {Box, Button, Typography} from "@material-ui/core";
 import {Codebox} from "./components/Codebox";
 import {formatCommandForDisplay, getUrlFromShortcode} from "./Home";
-import {useParams} from "react-router";
+import {useParams, useRouteMatch} from "react-router";
 import {Link} from "react-router-dom";
 import {LoadingSpinner} from "./components/LoadingSpinner";
 import {ShareBox} from "./components/Share";
@@ -26,17 +26,19 @@ const GET_FIND_REPLACE_COMMAND = gql`
 `;
 
 export default function View() {
+    const match = useRouteMatch();
+    ReactGA.pageview(match.url);
     const {shortcode} = useParams();
-    ReactGA.pageview('/r');
+
     const {
         loading: frcLoading,
         error: frcError,
         data: frcData,
         // refetch: frcRefetch
     } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND, {variables: {shortcode}});
-    if (frcLoading) return <LoadingSpinner/>;
-    if (frcError || !frcData) return <ErrorComponent/>;
-    if (!frcData.getFindReplaceCommand) return <>404, sorry not found :(</>;
+    if (frcLoading) return <Page><LoadingSpinner/></Page>;
+    if (frcError || !frcData) return <Page><ErrorComponent/></Page>;
+    if (!frcData.getFindReplaceCommand) return <Page>404, sorry not found :(</Page>;
     return <Page>
         <Box mx={4} my={6}>
             <Typography variant="h4" component="h1">
