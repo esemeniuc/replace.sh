@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import Home from "./Home";
 import View from "./View";
 
@@ -12,9 +12,10 @@ export function PageContainer() {
                 <Route path={`/r/:shortcode`}>
                     <View/>
                 </Route>
-                <Route path="/">
+                <Route path="/" exact>
                     <Home/>
                 </Route>
+                <Route component={()=><Redirect to="/" />} />
             </Switch>
         </div>
     </Router>;
