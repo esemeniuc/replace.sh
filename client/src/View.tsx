@@ -37,7 +37,7 @@ export default function View() {
         // refetch: frcRefetch
     } = useQuery<GetFindReplaceCommand>(GET_FIND_REPLACE_COMMAND, {variables: {shortcode}});
     if (frcLoading) return <Page><LoadingSpinner/></Page>;
-    if (frcError || !frcData) return <Page><ErrorComponent/></Page>;
+    if (frcError || !frcData) return <Page><ErrorComponent message={`${shortcode} not found :(`}/></Page>;
     if (!frcData.getFindReplaceCommand) return <Page>404, sorry not found :(</Page>;
     return <Page>
         <Box mx={4} my={6}>

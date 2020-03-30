@@ -140,7 +140,7 @@ export default function Home() {
         </form>
         {
             ccLoading ? <LoadingSpinner/> :
-                ccError ? <ErrorComponent/> :
+                ccError ? <ErrorComponent message={`Couldn't send request ${ccError}`}/> :
                     ccData && <Box mx={4} my={6}>
                         <Typography variant="h4"
                                     component="h1"
