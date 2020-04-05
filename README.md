@@ -8,6 +8,16 @@ A simple find and replace command generator with a React front end, and Rust bac
 
 [![asciicast](https://asciinema.org/a/y5K6D81FL6J4z71jzcqxBd4R7.svg)](https://asciinema.org/a/y5K6D81FL6J4z71jzcqxBd4R7)
 
+## Building
+From the `client` folder
+```bash
+yarn build
+```
+From the `server` folder
+```bash
+cargo build --release -j $(nproc)
+```
+
 ## Links
 Website: https://replace.sh
 
