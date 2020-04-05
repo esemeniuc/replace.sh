@@ -1,4 +1,11 @@
+
+# Requirements
+
+- Rust nightly (for Rocket web server)
+- Sqlite
+
 # Setup
+
 ```bash
 cargo install diesel_cli --no-default-features --features "sqlite"
 
