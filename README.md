@@ -2,9 +2,7 @@
 
 A simple find and replace command generator with a React front end, and Rust backend for serving links with info about the command.
 
-<p align="justify">
 <img src="https://github.com/esemeniuc/replace.sh/blob/master/assets/replace.sh_screenshot.png" height="1000" alt="replace.sh screenshot">
-</p>
 
 ## Command line demo
 
