@@ -1,5 +1,5 @@
 [package]
-name = "server"
+name = "replace.sh"
 version = "1.0.0"
 authors = ["Eric Semeniuc <3838856+esemeniuc@users.noreply.github.com>"]
 edition = "2018"
