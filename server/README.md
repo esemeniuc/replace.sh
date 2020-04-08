@@ -35,7 +35,7 @@ scp .env root@direct.replace.sh:~/
 # restart service in new tmux
 ssh root@direct.replace.sh "cd /root && \
 if [[ -f server.swp ]]; then mv server.swp server; fi && \
-tmux kill-server && \
-tmux new-session -d 'ROCKET_PORT=80 /root/server'"
+tmux kill-server; \
+tmux new-session -d sh -i -c 'ROCKET_PORT=80 ROCKET_LOG=normal /root/server'"
 ```
 Note: this creates a file `db.sqlite` wherever it is run from
