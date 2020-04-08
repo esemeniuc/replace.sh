@@ -29,13 +29,13 @@ ROCKET_PORT=80 ./target/release/server
 cd ../client && yarn build && cd - && cargo build --release -j $(nproc)
 
 # copy files
-scp -C target/release/server root@direct.replace.sh:~/server.swp
+scp -C target/release/replace_sh root@direct.replace.sh:~/replace_sh.swp
 scp .env root@direct.replace.sh:~/
 
 # restart service in new tmux
 ssh root@direct.replace.sh "cd /root && \
-if [[ -f server.swp ]]; then mv server.swp server; fi && \
-tmux kill-server; \
-tmux new-session -d sh -i -c 'ROCKET_PORT=80 ROCKET_LOG=normal /root/server'"
+if [[ -f replace_sh.swp ]]; then mv replace_sh.swp replace_sh; fi && \
+tmux kill-replace_sh; \
+tmux new-session -d sh -i -c 'ROCKET_PORT=80 ROCKET_LOG=normal /root/replace_sh'"
 ```
 Note: this creates a file `db.sqlite` wherever it is run from
