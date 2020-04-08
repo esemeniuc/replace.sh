@@ -3,6 +3,7 @@ import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from '@apollo/cli
 import {PageContainer} from "./PageContainer";
 import {GRAPHQL_ENDPOINT} from "./config";
 import ReactGA from 'react-ga';
+import {CssBaseline} from "@material-ui/core";
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
@@ -19,6 +20,7 @@ export default function App() {
     });
 
     return <ApolloProvider client={client}>
+        <CssBaseline />
         <PageContainer/>
     </ApolloProvider>;
 }

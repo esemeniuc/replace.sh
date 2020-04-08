@@ -72,7 +72,7 @@ export default function Home() {
                     id="outlined-multiline-static"
                     label="Find"
                     multiline
-                    rows="8"
+                    rows={8}
                     placeholder="Eg. foo123"
                     variant="outlined"
                     autoFocus
@@ -95,7 +95,7 @@ export default function Home() {
                     id="outlined-multiline-static"
                     label="Replace"
                     multiline
-                    rows="8"
+                    rows={8}
                     placeholder="Eg. bar123"
                     variant="outlined"
                     fullWidth
