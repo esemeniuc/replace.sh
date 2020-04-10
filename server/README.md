@@ -20,7 +20,7 @@ diesel migration run
 #### Build and test locally
 ```bash
 cargo build --release -j $(nproc)
-ROCKET_PORT=80 ./target/release/server
+IP_PORT=0.0.0.0:80 ./target/release/replace_sh
 ```
 
 #### Build client, build server, deploy
