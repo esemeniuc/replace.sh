@@ -3,7 +3,7 @@ import ReactGA from 'react-ga';
 import React, {useState} from "react";
 import {gql, useMutation} from '@apollo/client';
 import {CreateCommand} from "./__generated__/CreateCommand";
-import {Box, Button, TextField, Tooltip, Typography} from "@material-ui/core";
+import {Box, Button, Container, TextField, Tooltip, Typography} from "@material-ui/core";
 import {VIEW_FRC_ENDPOINT} from "./config";
 import {Codebox} from "./components/Codebox";
 import AsciinemaPlayer from "./components/AsciinemaPlayer";
@@ -108,12 +108,14 @@ export default function Home() {
             <Typography variant="h5" component="h2" align="center" gutterBottom>
                 Optional customizations ⤵
             </Typography>
-            <Box my={4} mx={30}>
-                <FindReplaceOptionsSelector isGlobal={isGlobal}
-                                            setIsGlobal={setIsGlobal}
-                                            isInplace={isInplace}
-                                            setIsInplace={setIsInplace}
-                                            disableInput={false}/>
+            <Box my={4}>
+                <Container maxWidth='xs'>
+                    <FindReplaceOptionsSelector isGlobal={isGlobal}
+                                                setIsGlobal={setIsGlobal}
+                                                isInplace={isInplace}
+                                                setIsInplace={setIsInplace}
+                                                disableInput={false}/>
+                </Container>
             </Box>
 
             <Box my={4}/>
