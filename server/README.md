@@ -3,8 +3,8 @@ A graphql backend that stores and serves created find-replaces. Built with Rust 
 
 ## Requirements
 
-- Rust nightly (for Rocket web server)
-- Sqlite
+- Rust 1.42+
+- Sqlite3
 
 ## Setup
 
